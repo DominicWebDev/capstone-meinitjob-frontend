@@ -22,7 +22,7 @@ export default function LandingPage() {
 
   return (
     <LandingPageContainer>
-      <h1>Potential Employers</h1>
+      <h1>Unternehmen</h1>
       <div>
         {companies.map((company) => (
           <CompanyPreviewCard
@@ -34,7 +34,7 @@ export default function LandingPage() {
         ))}
       </div>
       <Link href="/companies">
-        <button>View All Companies</button>
+        <button>Alle Unternehmen</button>
       </Link>
     </LandingPageContainer>
   );
