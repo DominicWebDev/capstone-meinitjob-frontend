@@ -2,6 +2,7 @@ import { CompanyPreviewCard } from "../components/CompanyPreviewCard";
 import styled from "styled-components";
 import CompanyFilter from "../components/CompanyFilter";
 import { useEffect, useState } from "react";
+
 const CompaniesPageContainer = styled.div`
   width: 100vw;
   max-width: 100vw;
