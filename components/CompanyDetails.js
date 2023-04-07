@@ -24,12 +24,14 @@ export default function CompanyDetails({ company }) {
         content={<CompanyDescription company={company} />}
       />
 
-      <Image
-        src={`/logos/${company.logo}`}
-        alt={`${company.name} logo`}
-        width={200}
-        height={200}
-      />
+      {logo && (
+        <Image
+          src={`/logos/${company.logo}`}
+          alt={`${company.name} logo`}
+          width={200}
+          height={200}
+        />
+      )}
     </div>
   );
 }

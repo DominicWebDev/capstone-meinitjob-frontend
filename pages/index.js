@@ -28,7 +28,7 @@ export default function LandingPage() {
           <CompanyPreviewCard
             key={company.id}
             name={company.name}
-            logo={company.logo}
+            logo={company?.logo}
             id={company.id}
           />
         ))}
