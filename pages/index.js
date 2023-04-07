@@ -1,5 +1,4 @@
 import Link from "next/link";
-import data from "../public/companies.json";
 import { useState, useEffect } from "react";
 import { CompanyPreviewCard } from "../components/CompanyPreviewCard";
 import styled from "styled-components";
@@ -15,9 +14,16 @@ export default function LandingPage() {
   const [companies, setCompanies] = useState([]);
 
   useEffect(() => {
-    const shuffled = data.sort(() => 0.5 - Math.random());
+    /*     const shuffled = data.sort(() => 0.5 - Math.random());
     const selected = shuffled.slice(0, 3);
-    setCompanies(selected);
+    setCompanies(selected); */
+
+    async function fetchData() {
+      const response = await fetch("/companies.json");
+      const json = await response.json();
+      setCompanies(json);
+    }
+    fetchData();
   }, []);
 
   return (
@@ -26,10 +32,10 @@ export default function LandingPage() {
       <div>
         {companies.map((company) => (
           <CompanyPreviewCard
-            key={company.id}
-            name={company.name}
+            key={company?.id}
+            name={company?.name}
             logo={company?.logo}
-            id={company.id}
+            id={company?.id}
           />
         ))}
       </div>

@@ -33,7 +33,7 @@ export function CompanyPreviewCard({ logo, name, id }) {
     <PreviewCard>
       <Link href={`/company/${id}`}>
         <PreviewCardLogo>
-          {logo && (
+          {logo && name && (
             <Image
               src={`/logos/${logo}`}
               alt={`${name} logo`}

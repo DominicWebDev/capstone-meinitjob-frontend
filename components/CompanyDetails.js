@@ -6,8 +6,6 @@ import CompanyDescription from "./CompanyDescription";
 import CompanyDataBoxContact from "./CompanyDataBox/CompanyDataBoxContact";
 
 export default function CompanyDetails({ company }) {
-  console.log("CompanyDetails", company);
-  console.log("TYPEOFOUTPUT", typeof company);
   return (
     <div>
       <CompanyDataBox
@@ -24,7 +22,7 @@ export default function CompanyDetails({ company }) {
         content={<CompanyDescription company={company} />}
       />
 
-      {logo && (
+      {company?.logo && (
         <Image
           src={`/logos/${company.logo}`}
           alt={`${company.name} logo`}
@@ -34,4 +32,11 @@ export default function CompanyDetails({ company }) {
       )}
     </div>
   );
+}
+export async function getStaticProps() {
+  return {
+    props: {
+      company,
+    }, // will be passed to the page component as props
+  };
 }

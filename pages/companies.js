@@ -1,8 +1,7 @@
-import data from "../public/companies.json";
 import { CompanyPreviewCard } from "../components/CompanyPreviewCard";
 import styled from "styled-components";
 import CompanyFilter from "../components/CompanyFilter";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 const CompaniesPageContainer = styled.div`
   width: 100vw;
   max-width: 100vw;
@@ -23,8 +22,14 @@ const CompaniesCardContainer = styled.div`
 `;
 
 export default function CompaniesPage() {
-  const [newData, setNewData] = useState(data);
+  const [newData, setNewData] = useState([]);
   const companyLength = newData.length;
+
+  async function fetchData() {
+    const response = await fetch("/companies.json");
+    const json = await response.json();
+    setNewData(json);
+  }
 
   const handleFilter = (numberOfEmployees) =>
     setNewData((prevNewData) =>
@@ -38,12 +43,11 @@ export default function CompaniesPage() {
     );
 
   const handleReset = () => {
-    setNewData(data);
+    fetchData();
   };
-
-  {
-  }
-  console.log(newData);
+  useEffect(() => {
+    fetchData();
+  }, []);
   return (
     <CompaniesPageContainer>
       <CompanieHeadline> {companyLength} Partnerunternehmen</CompanieHeadline>
@@ -56,10 +60,10 @@ export default function CompaniesPage() {
       <CompaniesCardContainer>
         {newData.map((company) => (
           <CompanyPreviewCard
-            key={company.id}
-            name={company.name}
+            key={company?.id}
+            name={company?.name}
             logo={company?.logo}
-            id={company.id}
+            id={company?.id}
           />
         ))}
       </CompaniesCardContainer>

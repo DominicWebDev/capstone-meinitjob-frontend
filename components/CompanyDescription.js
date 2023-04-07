@@ -3,7 +3,7 @@ import React from "react";
 const CompanyDescription = ({ company }) => {
   return (
     <div>
-      <p>Beschreibung{company.description}</p>
+      <p>Beschreibung{company?.description}</p>
     </div>
   );
 };
