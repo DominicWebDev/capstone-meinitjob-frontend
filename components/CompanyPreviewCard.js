@@ -3,13 +3,15 @@ import Image from "next/image";
 import styled from "styled-components";
 
 const PreviewCard = styled.div`
-  border: 1px solid black;
-  border-radius: 10px;
-  padding: 10px;
-  margin: 10px;
+  border: 1.5px solid black;
+  border-radius: 8px;
+  padding: 8px;
+  margin: 8px;
   max-width: 250px;
-  background-color: #f5f5f5;
-  text-decoration: none;
+  background-color: burlywood;
+  a {
+    text-decoration: none;
+  }
 `;
 
 const PreviewCardLogo = styled.div`
@@ -23,6 +25,7 @@ const PreviewCardName = styled.h2`
   word-break: break-all;
   font-size: 0.8rem;
   text-decoration: none;
+  color: black;
 `;
 
 export function CompanyPreviewCard({ logo, name, id }) {
@@ -30,12 +33,14 @@ export function CompanyPreviewCard({ logo, name, id }) {
     <PreviewCard>
       <Link href={`/company/${id}`}>
         <PreviewCardLogo>
-          <Image
-            src={`/logos/${logo}`}
-            alt={`${name} logo`}
-            width={125}
-            height={125}
-          />
+          {logo && (
+            <Image
+              src={`/logos/${logo}`}
+              alt={`${name} logo`}
+              width={100}
+              height={100}
+            />
+          )}
           <PreviewCardName>{name}</PreviewCardName>
         </PreviewCardLogo>
       </Link>

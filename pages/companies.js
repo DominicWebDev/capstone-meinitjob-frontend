@@ -3,7 +3,6 @@ import { CompanyPreviewCard } from "../components/CompanyPreviewCard";
 import styled from "styled-components";
 import CompanyFilter from "../components/CompanyFilter";
 import { useState } from "react";
-
 const CompaniesPageContainer = styled.div`
   width: 100vw;
   max-width: 100vw;
@@ -59,7 +58,7 @@ export default function CompaniesPage() {
           <CompanyPreviewCard
             key={company.id}
             name={company.name}
-            logo={company.logo}
+            logo={company?.logo}
             id={company.id}
           />
         ))}

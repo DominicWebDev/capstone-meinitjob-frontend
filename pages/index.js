@@ -36,6 +36,7 @@ export default function LandingPage() {
       <Link href="/companies">
         <button>Alle Unternehmen</button>
       </Link>
+      {/*       <Navbar /> */}
     </LandingPageContainer>
   );
 }
