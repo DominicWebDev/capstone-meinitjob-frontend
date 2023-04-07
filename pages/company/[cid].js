@@ -10,9 +10,10 @@ import { useEffect, useState } from "react";
 } */
 
 export default function CompanyDetailsPage() {
-  const [companies, setCompanies] = useState([]);
   const router = useRouter();
   const { cid } = router.query;
+
+  const [companies, setCompanies] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -23,9 +24,7 @@ export default function CompanyDetailsPage() {
     fetchData();
   }, []);
 
-  const oneCompany = companies.find(
-    (companyEntry) => companyEntry?.id === +cid
-  );
+  const oneCompany = companies.find((companyEntry) => companyEntry.id === +cid);
 
   return <CompanyDetails company={oneCompany} />;
 }

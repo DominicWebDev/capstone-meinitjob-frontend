@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { CompanyPreviewCard } from "../components/CompanyPreviewCard";
 import styled from "styled-components";
+import Navbar from "../components/layout/Navbar";
 
 const LandingPageContainer = styled.div`
   display: flex;
@@ -31,17 +32,16 @@ export default function LandingPage() {
       <div>
         {companies.map((company) => (
           <CompanyPreviewCard
-            key={company?.id}
-            name={company?.name}
-            logo={company?.logo}
-            id={company?.id}
+            key={company.id}
+            name={company.name}
+            logo={company.logo}
+            id={company.id}
           />
         ))}
       </div>
       <Link href="/companies">
         <button>Alle Unternehmen</button>
       </Link>
-      {/*       <Navbar /> */}
     </LandingPageContainer>
   );
 }

@@ -10,9 +10,9 @@ const CompanyDataBoxName = styled.h1`
 const CompanyDataBoxContact = ({ company }) => {
   return (
     <div>
-      <CompanyDataBoxName>{company?.name}</CompanyDataBoxName>
-      <p>Location: {company?.location}</p>
-      <p>Homepage: {company?.homepage}</p>
+      <CompanyDataBoxName>{company.name}</CompanyDataBoxName>
+      <p>Location: {company.location}</p>
+      <p>Homepage: {company.homepage}</p>
     </div>
   );
 };

@@ -2,6 +2,7 @@ import { CompanyPreviewCard } from "../components/CompanyPreviewCard";
 import styled from "styled-components";
 import CompanyFilter from "../components/CompanyFilter";
 import { useEffect, useState } from "react";
+import Navbar from "../components/layout/Navbar";
 
 const CompaniesPageContainer = styled.div`
   width: 100vw;
@@ -61,10 +62,10 @@ export default function CompaniesPage() {
       <CompaniesCardContainer>
         {newData.map((company) => (
           <CompanyPreviewCard
-            key={company?.id}
-            name={company?.name}
-            logo={company?.logo}
-            id={company?.id}
+            key={company.id}
+            name={company.name}
+            logo={company.logo}
+            id={company.id}
           />
         ))}
       </CompaniesCardContainer>
