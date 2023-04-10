@@ -39,6 +39,7 @@ export function CompanyPreviewCard({ logo, name, id }) {
               alt={`${name} logo`}
               width={100}
               height={100}
+              priority
             />
           )}
           <PreviewCardName>{name}</PreviewCardName>

@@ -2,7 +2,6 @@ import { CompanyPreviewCard } from "../components/CompanyPreviewCard";
 import styled from "styled-components";
 import CompanyFilter from "../components/CompanyFilter";
 import { useEffect, useState } from "react";
-import Navbar from "../components/layout/Navbar";
 
 const CompaniesPageContainer = styled.div`
   width: 100vw;
@@ -33,31 +32,30 @@ export default function CompaniesPage() {
     setNewData(json);
   }
 
-  const handleFilter = (numberOfEmployees) =>
+  const handleFilter = (filterObject) =>
     setNewData((prevNewData) =>
-      prevNewData.filter(
-        (filteredData) => filteredData.numberOfEmployees <= numberOfEmployees
-      )
-    );
-  const handleRemoteFilter = (remote) =>
-    setNewData((prevNewData) =>
-      prevNewData.filter((filteredData) => filteredData.remote === remote)
+      prevNewData.filter((filteredData) => {
+        if (filterObject.numberOfEmployees && filterObject.remote) {
+          filteredData.numberOfEmployees <= filterObject.numberOfEmployees &&
+            filteredData.remote === filterObject.remote;
+        }
+      })
     );
 
-  const handleReset = () => {
-    fetchData();
+  console.log(newData, "newData");
+
+  const handleReset = async () => {
+    await fetchData();
   };
+
   useEffect(() => {
     fetchData();
   }, []);
+
   return (
     <CompaniesPageContainer>
       <CompanieHeadline> {companyLength} Partnerunternehmen</CompanieHeadline>
-      <CompanyFilter
-        handle={handleFilter}
-        reset={handleReset}
-        handleRemote={handleRemoteFilter}
-      />
+      <CompanyFilter filter={handleFilter} reset={handleReset} />
 
       <CompaniesCardContainer>
         {newData.map((company) => (

@@ -8,7 +8,7 @@ const CompanyFilterContainer = styled.div`
   color: #0a1239;
 `;
 
-const CompanyFilter = ({ handle, reset, handleRemote }) => {
+const CompanyFilter = ({ filter, reset }) => {
   const filteredNumbers = [50, 500, 1000];
   const [selectedFilter, setSelectedFilter] = useState(null);
   /*   const [selectedRemoteFilter, setSelectedRemoteFilter] = useState(false); */
@@ -21,14 +21,14 @@ const CompanyFilter = ({ handle, reset, handleRemote }) => {
           /* checked={selectedRemoteFilter === filteredNumber} */
           name="remote"
           type="checkbox"
-          onChange={(e) => {
+          onChange={async (e) => {
             if (e.target.checked) {
-              reset();
-              handleRemote(true);
+              await reset();
+              filter({ remote: true });
             }
             if (!e.target.checked) {
-              handleRemote(false);
-              reset();
+              filter({ remote: false });
+              await reset();
             }
           }}
         />
@@ -41,15 +41,15 @@ const CompanyFilter = ({ handle, reset, handleRemote }) => {
             checked={selectedFilter === filteredNumber}
             name="numberOfEmployees"
             type="checkbox"
-            onClick={(e) => {
+            onClick={async (e) => {
               if (selectedFilter !== filteredNumber) {
                 setSelectedFilter(filteredNumber);
-                reset();
-                handle(filteredNumber);
+                await reset();
+                filter({ numberOfEmployees: filteredNumber });
               }
               if (selectedFilter === filteredNumber) {
                 setSelectedFilter(null);
-                reset();
+                await reset();
               }
             }}
           />

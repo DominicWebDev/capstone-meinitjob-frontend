@@ -41,10 +41,10 @@ function Navbar() {
           <Link href="/">Startseite</Link>
         </li>
         <li>
-          <Link href="/profil">Mein Profil</Link>
+          <Link href="/user/profil">Mein Profil</Link>
         </li>
         <li>
-          <Link href="/matches">Matches</Link>
+          <Link href="/user/matches">Matches</Link>
         </li>
 
         <li>
