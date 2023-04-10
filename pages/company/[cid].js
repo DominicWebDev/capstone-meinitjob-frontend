@@ -24,6 +24,11 @@ export default function CompanyDetailsPage() {
     fetchData();
   }, []);
 
+  // wenn die companies Daten noch nicht geladen sind
+  if (companies.length === 0) {
+    return <div>Loading...</div>;
+  }
+
   const oneCompany = companies.find((companyEntry) => companyEntry.id === +cid);
 
   return <CompanyDetails company={oneCompany} />;
