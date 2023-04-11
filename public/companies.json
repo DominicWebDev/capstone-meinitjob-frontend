@@ -10,7 +10,8 @@
     "established": 2012,
     "homepage": "https://innovative-software.de",
     "description": "Die Innovative Software GmbH ist ein junges und aufstrebendes Softwareunternehmen mit Sitz in Deutschland. Unser engagiertes Team von Entwicklern und Ingenieuren arbeitet ständig daran, innovative Lösungen zu entwickeln, die unseren Kunden helfen, ihre Geschäftsziele zu erreichen und ihre Produktivität zu steigern.",
-    "logo": "1-innovative-software-512x512.png"
+    "logo": "1-innovative-software-512x512.png",
+    "lookingfor": "react"
   },
   {
     "id": 2,
@@ -23,7 +24,8 @@
     "established": 2010,
     "homepage": "https://global-it-solutions.com",
     "description": "Global IT Solutions Ltd. ist ein führender Anbieter von IT-Lösungen für Unternehmen weltweit. Unser engagiertes Team von Experten arbeitet eng mit unseren Kunden zusammen, um individuelle Lösungen zu entwickeln, die ihren spezifischen Anforderungen entsprechen und ihnen dabei helfen, ihre Geschäftsziele zu erreichen.",
-    "logo": "2-global-it-solutions-512x512.png"
+    "logo": "2-global-it-solutions-512x512.png",
+    "lookingfor": "react"
   },
   {
     "id": 3,
@@ -329,7 +331,7 @@
     "name": "CloudScope Inc.",
     "location": "global",
     "remote": true,
-    "numberOfEmployees": 150,
+    "numberOfEmployees": 2150,
     "revenue": 15000000,
     "sector": "Cloud Computing",
     "established": 2012,
@@ -342,7 +344,7 @@
     "name": "Data Security Systems GmbH",
     "location": "german",
     "remote": false,
-    "numberOfEmployees": 120,
+    "numberOfEmployees": 2120,
     "revenue": 12000000,
     "sector": "Cybersecurity",
     "established": 2015,

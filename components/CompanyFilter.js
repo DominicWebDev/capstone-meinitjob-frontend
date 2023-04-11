@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { useState } from "react";
 
 const CompanyFilterContainer = styled.div`
   border: 1px solid black;
@@ -8,29 +7,40 @@ const CompanyFilterContainer = styled.div`
   color: #0a1239;
 `;
 
-const CompanyFilter = ({ handle, reset, handleRemote }) => {
+const CompanyFilter = ({ filterOptions, setFilterOptions, handleReset }) => {
   const filteredNumbers = [50, 500, 1000];
-  const [selectedFilter, setSelectedFilter] = useState(null);
-  /*   const [selectedRemoteFilter, setSelectedRemoteFilter] = useState(false); */
+
+  const handleRemoteFilter = (e) => {
+    setFilterOptions({
+      ...filterOptions,
+      remote: e.target.checked,
+    });
+  };
+
+  const handleNumberOfEmployeesFilter = (e) => {
+    const numberOfEmployees = parseInt(e.target.value);
+    if (e.target.checked) {
+      setFilterOptions({
+        ...filterOptions,
+        numberOfEmployees,
+      });
+    } else {
+      setFilterOptions({
+        ...filterOptions,
+        numberOfEmployees: null,
+      });
+    }
+  };
 
   return (
     <CompanyFilterContainer>
       <label>
         100% Remote
         <input
-          /* checked={selectedRemoteFilter === filteredNumber} */
           name="remote"
           type="checkbox"
-          onChange={(e) => {
-            if (e.target.checked) {
-              reset();
-              handleRemote(true);
-            }
-            if (!e.target.checked) {
-              handleRemote(false);
-              reset();
-            }
-          }}
+          checked={filterOptions.remote}
+          onChange={handleRemoteFilter}
         />
       </label>
 
@@ -38,23 +48,15 @@ const CompanyFilter = ({ handle, reset, handleRemote }) => {
         <label key={filteredNumber}>
           Bis {filteredNumber} Mitarbeiter
           <input
-            checked={selectedFilter === filteredNumber}
+            checked={filterOptions.numberOfEmployees === filteredNumber}
             name="numberOfEmployees"
             type="checkbox"
-            onClick={(e) => {
-              if (selectedFilter !== filteredNumber) {
-                setSelectedFilter(filteredNumber);
-                reset();
-                handle(filteredNumber);
-              }
-              if (selectedFilter === filteredNumber) {
-                setSelectedFilter(null);
-                reset();
-              }
-            }}
+            value={filteredNumber}
+            onChange={handleNumberOfEmployeesFilter}
           />
         </label>
       ))}
+      {/*  <button onClick={handleReset}>Reset</button> */}
     </CompanyFilterContainer>
   );
 };

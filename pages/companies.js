@@ -1,8 +1,7 @@
-import data from "../public/companies.json";
 import { CompanyPreviewCard } from "../components/CompanyPreviewCard";
 import styled from "styled-components";
 import CompanyFilter from "../components/CompanyFilter";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const CompaniesPageContainer = styled.div`
   width: 100vw;
@@ -24,38 +23,63 @@ const CompaniesCardContainer = styled.div`
 `;
 
 export default function CompaniesPage() {
-  const [newData, setNewData] = useState(data);
-  const companyLength = newData.length;
+  const [companies, setCompanies] = useState([]);
+  const [filteredCompanies, setFilteredCompanies] = useState([]);
+  const [filterOptions, setFilterOptions] = useState({
+    remote: false,
+    numberOfEmployees: null,
+  });
 
-  const handleFilter = (numberOfEmployees) =>
-    setNewData((prevNewData) =>
-      prevNewData.filter(
-        (filteredData) => filteredData.numberOfEmployees <= numberOfEmployees
-      )
-    );
-  const handleRemoteFilter = (remote) =>
-    setNewData((prevNewData) =>
-      prevNewData.filter((filteredData) => filteredData.remote === remote)
-    );
-
-  const handleReset = () => {
-    setNewData(data);
+  const fetchData = async () => {
+    const response = await fetch("/companies.json");
+    const json = await response.json();
+    setCompanies(json);
+    setFilteredCompanies(json);
   };
 
-  {
-  }
-  console.log(newData);
+  const applyFilters = () => {
+    let filtered = companies;
+    if (filterOptions.remote) {
+      filtered = filtered.filter((company) => company.remote === true);
+    }
+    if (filterOptions.numberOfEmployees !== null) {
+      filtered = filtered.filter(
+        (company) =>
+          company.numberOfEmployees <= filterOptions.numberOfEmployees
+      );
+    }
+    setFilteredCompanies(filtered);
+  };
+
+  const handleReset = () => {
+    setFilterOptions({
+      remote: false,
+      numberOfEmployees: null,
+    });
+    setFilteredCompanies(companies);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    applyFilters();
+  }, [filterOptions]);
+
   return (
     <CompaniesPageContainer>
-      <CompanieHeadline> {companyLength} Partnerunternehmen</CompanieHeadline>
+      <CompanieHeadline>
+        {filteredCompanies.length} Partnerunternehmen
+      </CompanieHeadline>
       <CompanyFilter
-        handle={handleFilter}
-        reset={handleReset}
-        handleRemote={handleRemoteFilter}
+        filterOptions={filterOptions}
+        setFilterOptions={setFilterOptions}
+        handleReset={handleReset}
       />
 
       <CompaniesCardContainer>
-        {newData.map((company) => (
+        {filteredCompanies.map((company) => (
           <CompanyPreviewCard
             key={company.id}
             name={company.name}
