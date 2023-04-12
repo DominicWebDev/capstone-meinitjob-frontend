@@ -7,7 +7,7 @@ const CompanyFilterContainer = styled.div`
   color: #0a1239;
 `;
 
-const CompanyFilter = ({ filterOptions, setFilterOptions, handleReset }) => {
+const CompanyFilter = ({ filterOptions, setFilterOptions }) => {
   const filteredNumbers = [50, 500, 1000];
 
   const handleRemoteFilter = (e) => {
@@ -56,7 +56,6 @@ const CompanyFilter = ({ filterOptions, setFilterOptions, handleReset }) => {
           />
         </label>
       ))}
-      {/*  <button onClick={handleReset}>Reset</button> */}
     </CompanyFilterContainer>
   );
 };

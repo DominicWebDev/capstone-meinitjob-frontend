@@ -2,7 +2,7 @@
   {
     "id": 1,
     "name": "Innovative Software GmbH",
-    "location": "german",
+    "location": "germany",
     "remote": true,
     "numberOfEmployees": 10,
     "revenue": 2500000,
@@ -30,7 +30,7 @@
   {
     "id": 3,
     "name": "Future Technologies GmbH",
-    "location": "german",
+    "location": "germany",
     "remote": false,
     "numberOfEmployees": 500,
     "revenue": 5000000,
@@ -56,7 +56,7 @@
   {
     "id": 5,
     "name": "Digitale Unternehmenslösungen AG",
-    "location": "german",
+    "location": "germany",
     "remote": false,
     "numberOfEmployees": 200,
     "revenue": 20000000,
@@ -95,7 +95,7 @@
   {
     "id": 8,
     "name": "Future Security Technologies GmbH",
-    "location": "german",
+    "location": "germany",
     "remote": false,
     "numberOfEmployees": 50,
     "revenue": 7500000,
@@ -108,7 +108,7 @@
   {
     "id": 9,
     "name": "Kreative Technologien GmbH",
-    "location": "german",
+    "location": "germany",
     "remote": false,
     "numberOfEmployees": 200,
     "revenue": 20000000,
@@ -121,7 +121,7 @@
   {
     "id": 10,
     "name": "Smart Systems AG",
-    "location": "german",
+    "location": "germany",
     "remote": false,
     "numberOfEmployees": 500,
     "revenue": 50000000,
@@ -134,7 +134,7 @@
   {
     "id": 11,
     "name": "Virtual Reality Solutions GmbH",
-    "location": "german",
+    "location": "germany",
     "remote": true,
     "numberOfEmployees": 100,
     "revenue": 10000000,
@@ -160,7 +160,7 @@
   {
     "id": 13,
     "name": "Digital Dynamics GmbH",
-    "location": "german",
+    "location": "germany",
     "remote": true,
     "numberOfEmployees": 150,
     "revenue": 15000000,
@@ -199,7 +199,7 @@
   {
     "id": 16,
     "name": "Intelligent Systems GmbH",
-    "location": "german",
+    "location": "germany",
     "remote": false,
     "numberOfEmployees": 100,
     "revenue": 10000000,
@@ -212,7 +212,7 @@
   {
     "id": 17,
     "name": "AgileTech GmbH",
-    "location": "german",
+    "location": "germany",
     "remote": false,
     "numberOfEmployees": 80,
     "revenue": 8000000,
@@ -251,7 +251,7 @@
   {
     "id": 20,
     "name": "Cloudware Systems GmbH",
-    "location": "german",
+    "location": "germany",
     "remote": true,
     "numberOfEmployees": 90,
     "revenue": 12000000,
@@ -277,7 +277,7 @@
   {
     "id": 22,
     "name": "Safeguard Cybersecurity GmbH",
-    "location": "german",
+    "location": "germany",
     "remote": false,
     "numberOfEmployees": 150,
     "revenue": 15000000,
@@ -303,7 +303,7 @@
   {
     "id": 24,
     "name": "Digital Commerce GmbH",
-    "location": "german",
+    "location": "germany",
     "remote": false,
     "numberOfEmployees": 100,
     "revenue": 10000000,
@@ -316,7 +316,7 @@
   {
     "id": 25,
     "name": "CodeWave Solutions GmbH",
-    "location": "german",
+    "location": "germany",
     "remote": true,
     "numberOfEmployees": 80,
     "revenue": 8000000,
@@ -342,7 +342,7 @@
   {
     "id": 27,
     "name": "Data Security Systems GmbH",
-    "location": "german",
+    "location": "germany",
     "remote": false,
     "numberOfEmployees": 2120,
     "revenue": 12000000,
@@ -368,7 +368,7 @@
   {
     "id": 29,
     "name": "DataTech Solutions GmbH",
-    "location": "german",
+    "location": "germany",
     "remote": true,
     "numberOfEmployees": 150,
     "revenue": 15000000,
@@ -381,7 +381,7 @@
   {
     "id": 30,
     "name": "Cloud Dynamics GmbH",
-    "location": "german",
+    "location": "germany",
     "remote": false,
     "numberOfEmployees": 200,
     "revenue": 20000000,
