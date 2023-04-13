@@ -1,10 +1,5 @@
-import React from "react";
-import Router from "next/router";
+import UserProfilePage from "../../components/UserProfile/UserProfilePage";
 
-const profil = () => (
-  <div>
-    <p>HELLO PROFIL!</p>
-  </div>
-);
-
-export default profil;
+export default function Profile() {
+  return <UserProfilePage />;
+}
