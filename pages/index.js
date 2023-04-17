@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { CompanyPreviewCard } from "../components/CompanyPreviewCard";
+
 import styled from "styled-components";
+import CompanyPreviewCard from "../components/CompanyPreviewCard";
 
 const LandingPageContainer = styled.div`
   display: flex;

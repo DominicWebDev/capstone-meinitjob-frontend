@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
   };
 } */
 
-export default function CompanyDetailsPage() {
+function CompanyDetailsPage() {
   const router = useRouter();
   const { cid } = router.query;
 
@@ -33,3 +33,5 @@ export default function CompanyDetailsPage() {
 
   return <CompanyDetails company={oneCompany} />;
 }
+
+export default CompanyDetailsPage;

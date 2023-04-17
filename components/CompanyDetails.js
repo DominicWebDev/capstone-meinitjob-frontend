@@ -11,7 +11,7 @@ const ImageContainer = styled.div`
   justify-content: center;
 `;
 
-export default function CompanyDetails({ company }) {
+function CompanyDetails({ company }) {
   return (
     <div>
       {company && (
@@ -49,3 +49,5 @@ export async function getStaticProps() {
     },
   };
 }
+
+export default CompanyDetails;

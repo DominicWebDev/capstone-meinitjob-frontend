@@ -1,5 +1,7 @@
 import UserProfilePage from "../../components/UserProfile/UserProfilePage";
 
-export default function Profile() {
+function Profile() {
   return <UserProfilePage />;
 }
+
+export default Profile;

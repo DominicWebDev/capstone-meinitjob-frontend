@@ -1,7 +1,7 @@
-import { CompanyPreviewCard } from "../components/CompanyPreviewCard";
 import styled from "styled-components";
 import CompanyFilter from "../components/CompanyFilter";
 import { useEffect, useState } from "react";
+import CompanyPreviewCard from "../components/CompanyPreviewCard";
 
 const CompaniesPageContainer = styled.div`
   width: 100vw;
@@ -9,6 +9,7 @@ const CompaniesPageContainer = styled.div`
 `;
 const CompanieHeadline = styled.h1`
   text-align: center;
+  color: #ff8509;
 `;
 
 const CompaniesCardContainer = styled.div`

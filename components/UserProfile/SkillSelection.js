@@ -1,40 +1,32 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { SkillRadioSelection } from "./SkillRadioSelection";
+
+const SkillName = styled.span`
+  width: 90px;
+  display: inline-block;
+  text-align: left;
+`;
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  height: 100%;
 `;
 
-const RemoveButton = styled.button`
-  padding: 4px;
-  border-radius: 4px;
-  border: none;
-  background-color: #e02020;
-  color: white;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #b01919;
-  }
-`;
-
-const SkillInputContainer = styled.div`
+const SkillSelectContainer = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
-  margin-bottom: 16px;
+  margin: auto;
+  border: 3px solid red;
+  font-size: 0.9rem;
+  height: 100%;
 `;
 
-const SkillInput = styled.input`
-  margin-right: 8px;
-`;
-
-const Label = styled.label`
-  margin-right: 16px;
-`;
-
-const LevelSelect = styled.select`
+const SkillSelect = styled.select`
   margin-right: 8px;
 `;
 
@@ -49,66 +41,53 @@ const Button = styled.button`
   &:hover {
     background-color: #0061d1;
   }
+
+  margin-top: auto;
 `;
 
-const Skill = ({ name, level, onRemove }) => {
-  return (
-    <SkillInputContainer>
-      <Label>{name}</Label>
-      <LevelSelect value={level} disabled onChange={() => {}}>
-        <option value="1">Level 1</option>
-        <option value="2">Level 2</option>
-        <option value="3">Level 3</option>
-      </LevelSelect>
-      <RemoveButton onClick={onRemove}>X</RemoveButton>
-    </SkillInputContainer>
-  );
-};
+const RemoveButton = styled(Button)`
+  padding: 4px 8px;
+  font-size: 12px;
+  margin-right: 8px;
+`;
 
-const SkillSelection = ({ skills, onSkillAdd, onSkillRemove }) => {
+const SkillSelection = ({ skills, onSkillAdd }) => {
   const [selectedSkill, setSelectedSkill] = useState("");
-  const [selectedLevel, setSelectedLevel] = useState("1");
+  const [selectedLevel, setSelectedLevel] = useState(1);
+
+  const handleResetSkillSelection = () => {
+    setSelectedSkill("");
+    setSelectedLevel(1);
+  };
 
   const handleSkillAdd = (event) => {
     event.preventDefault();
     if (selectedSkill) {
-      onSkillAdd(selectedSkill, selectedLevel);
-      setSelectedSkill("");
-      setSelectedLevel("1");
+      onSkillAdd({ name: selectedSkill, level: selectedLevel });
+      handleResetSkillSelection();
     }
-  };
-
-  const handleSkillRemove = (skillToRemove) => {
-    onSkillRemove(skillToRemove);
   };
 
   return (
     <Container>
-      {skills.map((skill) => (
-        <Skill
-          key={`${skill.name}-${skill.level}`}
-          name={skill.name}
-          level={skill.level}
-          onRemove={() => handleSkillRemove(skill)}
-        />
-      ))}
-      <SkillInputContainer>
-        <SkillInput
-          type="text"
-          placeholder="Neue Fähigkeit"
+      <SkillSelectContainer>
+        <SkillSelect
           value={selectedSkill}
           onChange={(event) => setSelectedSkill(event.target.value)}
-        />
-        <LevelSelect
-          value={selectedLevel}
-          onChange={(event) => setSelectedLevel(event.target.value)}
         >
-          <option value="1">Level 1</option>
-          <option value="2">Level 2</option>
-          <option value="3">Level 3</option>
-        </LevelSelect>
+          <option value="">-- Wähle eine Fähigkeit aus --</option>
+          {skills.map((skill) => (
+            <option key={skill} value={skill}>
+              {skill}
+            </option>
+          ))}
+        </SkillSelect>
+        <SkillRadioSelection
+          onSkillLevelChange={setSelectedLevel}
+          skillLevel={selectedLevel}
+        />
         <Button onClick={handleSkillAdd}>Hinzufügen</Button>
-      </SkillInputContainer>
+      </SkillSelectContainer>
     </Container>
   );
 };

@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const CompanyDataBoxName = styled.h1`
-  color: #0a1239;
+  color: #208e16;
   font-size: 1.5rem;
 `;
 

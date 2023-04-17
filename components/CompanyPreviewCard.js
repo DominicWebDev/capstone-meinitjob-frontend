@@ -8,7 +8,7 @@ const PreviewCard = styled.div`
   padding: 8px;
   margin: 8px;
   max-width: 250px;
-  background-color: burlywood;
+  background-color: #ff8509;
   a {
     text-decoration: none;
   }
@@ -25,10 +25,11 @@ const PreviewCardName = styled.h2`
   word-break: break-all;
   font-size: 0.8rem;
   text-decoration: none;
-  color: black;
+  color: #208e16;
+  font-weight: bolder;
 `;
 
-export function CompanyPreviewCard({ logo, name, id }) {
+function CompanyPreviewCard({ logo, name, id }) {
   return (
     <PreviewCard>
       <Link href={`/company/${id}`}>
@@ -48,3 +49,5 @@ export function CompanyPreviewCard({ logo, name, id }) {
     </PreviewCard>
   );
 }
+
+export default CompanyPreviewCard;
