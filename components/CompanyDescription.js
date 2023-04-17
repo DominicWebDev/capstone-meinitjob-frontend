@@ -1,10 +1,16 @@
 import React from "react";
+import styled from "styled-components";
+
+const DescriptionContainer = styled.div`
+  height: 200px;
+  overflow-y: auto;
+`;
 
 const CompanyDescription = ({ company }) => {
   return (
-    <div>
+    <DescriptionContainer>
       <p>{company.description}</p>
-    </div>
+    </DescriptionContainer>
   );
 };
 

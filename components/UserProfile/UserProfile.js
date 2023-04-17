@@ -132,7 +132,7 @@ const UserProfile = ({ user, onSubmit }) => {
     onSubmit({
       name,
       image,
-      skills: skills.map((skill) => ({ name: skill.name, level: skill.level })),
+      skills: userSkillList,
       availability,
       preference,
       description,
@@ -144,10 +144,7 @@ const UserProfile = ({ user, onSubmit }) => {
       JSON.stringify({
         name,
         image,
-        skills: skills.map((skill) => ({
-          name: skill.name,
-          level: skill.level,
-        })),
+        skills: userSkillList,
         availability,
         preference,
         description,
