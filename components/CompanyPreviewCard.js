@@ -7,7 +7,9 @@ const PreviewCard = styled.div`
   border-radius: 8px;
   padding: 8px;
   margin: 8px;
-  max-width: 250px;
+  max-width: 200px;
+  /* height: 150px;
+  width: 200px; */
   background-color: #ff8509;
   a {
     text-decoration: none;

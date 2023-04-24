@@ -3,11 +3,13 @@ import MatchedCompanies from "../../components/CompanyMatches/MatchedCompanies";
 import useCompanyStore from "../../slices/CreateCompanySlice";
 import useUserStore from "../../slices/CreateUserSlice";
 import useSkillStore from "../../slices/CreateSkillSlice";
-import UnmatchedCompanies from "../../components/CompanyMatches/UnmatchedCompanies";
+
+import UnacceptedCompanies from "../../components/CompanyMatches/UnacceptedCompanies";
 
 const Matches = () => {
   const [unacceptedCompanies, setUnacceptedCompanies] = useState([]);
   const [acceptedCompanies, setAcceptedCompanies] = useState([]);
+  const [currentCardIndex, setCurrentCardIndex] = useState(0);
 
   /* TODO: DYNAMIC USER ID FROM LOGIN */
   const user_id = "1";
@@ -42,12 +44,19 @@ const Matches = () => {
   );
  */
 
-  const handleSwipedRight = () => {
+  const handleSwipedRight = (cardIndex) => {
     console.log("swipeRIGHT");
+    setCurrentCardIndex((prevCardIndex) => prevCardIndex + 1);
+    setUnacceptedCompanies((prevUnacceptedCompanies) =>
+      prevUnacceptedCompanies.filter(
+        (company) => company.id !== storeSelectedCompanySkills[0].fk_company_id
+      )
+    );
   };
 
-  const handleSwipedLeft = () => {
+  const handleSwipedLeft = (cardIndex) => {
     console.log("swipeLeft");
+    setCurrentCardIndex((prevCardIndex) => prevCardIndex + 1);
   };
 
   const getAllCompanySkillsForAllCompanies = () => {};
@@ -256,6 +265,7 @@ const Matches = () => {
         storeAllCompanySkills
       );
       console.log("filteredUnmatchedCompanies", matchedCompanies);
+      setUnacceptedCompanies(matchedCompanies);
     }
   }, [
     storeSelectedUser,
@@ -291,13 +301,23 @@ const Matches = () => {
 
   return (
     <div>
-      <UnmatchedCompanies
-        unmatchedCompanies={unacceptedCompanies}
-        onSwipedLeft={handleSwipedLeft}
-        onSwipedRight={handleSwipedRight}
-      />
-
-      <MatchedCompanies matchedCompanies={acceptedCompanies} />
+      <div>
+        <h2>Unternehmen die zu dir passen!</h2>
+        {unacceptedCompanies.length > 0 ? (
+          <UnacceptedCompanies
+            currentCardIndex={currentCardIndex}
+            unmatchedCompanies={unacceptedCompanies}
+            onSwipedLeft={handleSwipedLeft}
+            onSwipedRight={handleSwipedRight}
+          />
+        ) : (
+          <div>No matching Companies</div>
+        )}
+      </div>
+      <div>
+        <h2>Diese Unternehmen stehen im Kontakt zu dir:</h2>
+        <MatchedCompanies matchedCompanies={acceptedCompanies} />
+      </div>
     </div>
   );
 };

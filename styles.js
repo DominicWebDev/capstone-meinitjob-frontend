@@ -13,4 +13,17 @@ export default createGlobalStyle`
     background-color:#fffde9;
     color: #f14f4a;
   }
+.navhover {
+  color: white;
+
+}
+.navhover:hover, .navhover:active {
+    color: orange;} 
+
+
+  .navicon {
+    fill: white;
+    }
+.navicon:hover, .navicon:active {
+    fill: orange;} 
 `;
