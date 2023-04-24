@@ -2,6 +2,7 @@ import styled from "styled-components";
 import CompanyFilter from "../components/CompanyFilter";
 import { useEffect, useState } from "react";
 import CompanyPreviewCard from "../components/CompanyPreviewCard";
+import useCompanyStore from "../slices/CreateCompanySlice";
 
 const CompaniesPageContainer = styled.div`
   width: 100vw;
@@ -31,24 +32,24 @@ export default function CompaniesPage() {
     numberOfEmployees: null,
   });
 
-  const fetchData = async () => {
-    const response = await fetch("/companies.json");
-    const json = await response.json();
-    setCompanies(json);
-    setFilteredCompanies(json);
-  };
+  const storeFetchCompanies = useCompanyStore((state) => state.fetchCompanies);
+  const storeCompanies = useCompanyStore((state) => state.companies);
 
   const applyFilters = () => {
     let filtered = companies;
+
     if (filterOptions.remote) {
-      filtered = filtered.filter((company) => company.remote === true);
+      filtered = filtered.filter((company) => company.remote);
     }
+
+    /* TODO: IS THE NULL CHECK HERE NECESSARY? IS A CHECK FOR FALSY ENOUGH? */
     if (filterOptions.numberOfEmployees !== null) {
       filtered = filtered.filter(
         (company) =>
-          company.numberOfEmployees <= filterOptions.numberOfEmployees
+          company.number_of_employees <= filterOptions.numberOfEmployees
       );
     }
+
     setFilteredCompanies(filtered);
   };
 
@@ -61,8 +62,13 @@ export default function CompaniesPage() {
   };
 
   useEffect(() => {
-    fetchData();
+    storeFetchCompanies();
   }, []);
+
+  useEffect(() => {
+    setCompanies(storeCompanies);
+    setFilteredCompanies(storeCompanies);
+  }, [storeCompanies]);
 
   useEffect(() => {
     applyFilters();

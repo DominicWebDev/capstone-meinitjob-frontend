@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 import styled from "styled-components";
 import CompanyPreviewCard from "../components/CompanyPreviewCard";
+import useCompanyStore from "../slices/CreateCompanySlice";
 
 const LandingPageContainer = styled.div`
   display: flex;
@@ -14,17 +15,23 @@ const LandingPageContainer = styled.div`
 export default function LandingPage() {
   const [companies, setCompanies] = useState([]);
 
-  useEffect(() => {
-    async function fetchData() {
-      const response = await fetch("/companies.json");
-      const json = await response.json();
+  const storeFetchCompanies = useCompanyStore((state) => state.fetchCompanies);
+  const storeCompanies = useCompanyStore((state) => state.companies);
 
-      const shuffled = json.sort(() => 0.5 - Math.random());
-      const selected = shuffled.slice(0, 3);
-      setCompanies(selected);
-    }
-    fetchData();
+  const getThreeRandomCompanies = (companiesArray) => {
+    const shuffled = storeCompanies.sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, 3);
+  };
+
+  useEffect(() => {
+    storeFetchCompanies();
   }, []);
+
+  useEffect(() => {
+    if (storeCompanies.length) {
+      setCompanies(getThreeRandomCompanies(storeCompanies));
+    }
+  }, [storeCompanies]);
 
   return (
     <LandingPageContainer>

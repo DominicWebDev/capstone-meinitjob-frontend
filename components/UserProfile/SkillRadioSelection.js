@@ -18,7 +18,7 @@ export const SkillRadioSelection = ({ skillLevel, onSkillLevelChange }) => {
     <>
       <LevelRadioContainer>
         {[1, 2, 3].map((level) => (
-          <LevelRadio for={level} key={level}>
+          <LevelRadio htmlFor={level} key={level}>
             Level {level}
             <LevelRadioInput
               type="radio"

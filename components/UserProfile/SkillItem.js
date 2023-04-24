@@ -23,7 +23,7 @@ const SkillItem = ({
   const handleSkillLevelChange = (level) => {
     onSkillLevelChange(skill, level);
   };
-
+  console.log("skillWODATEN", skill);
   return (
     <ListItem>
       <div> {skill}</div>
@@ -35,7 +35,9 @@ const SkillItem = ({
         />
       </div>
       <div>
-        <RemoveButton onClick={() => onSkillRemove(skill)}>-</RemoveButton>
+        <RemoveButton onClick={() => onSkillRemove(skill, skillLevel)}>
+          -
+        </RemoveButton>
       </div>
     </ListItem>
   );

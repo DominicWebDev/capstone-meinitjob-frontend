@@ -45,28 +45,33 @@ const Button = styled.button`
   margin-top: auto;
 `;
 
-const RemoveButton = styled(Button)`
-  padding: 4px 8px;
-  font-size: 12px;
-  margin-right: 8px;
-`;
-
 const SkillSelection = ({ skills, onSkillAdd }) => {
   const [selectedSkill, setSelectedSkill] = useState("");
   const [selectedLevel, setSelectedLevel] = useState(1);
 
-  const handleResetSkillSelection = () => {
-    setSelectedSkill("");
-    setSelectedLevel(1);
+  const findSkillInSkillStore = (skillName, level) => {
+    return skills.find((skill) => {
+      return skill.name === skillName && skill.level === level;
+    });
   };
 
   const handleSkillAdd = (event) => {
     event.preventDefault();
     if (selectedSkill) {
-      onSkillAdd({ name: selectedSkill, level: selectedLevel });
-      handleResetSkillSelection();
+      const foundSkill = findSkillInSkillStore(selectedSkill, selectedLevel);
+      console.log("foundSkillTESTHIER", foundSkill);
+      onSkillAdd({
+        skill_id: foundSkill.id,
+        user_id: "1",
+      }); /* TODO: HARDCODED FOR USER 1 NEEDS TO BE DYNAMIC FOR CURRENT USER */
+      /*       handleResetSkillSelection(); */
     }
   };
+
+  /* const handleResetSkillSelection = () => {
+    setSelectedSkill("");
+    setSelectedLevel(1);
+  }; */
 
   return (
     <Container>
@@ -76,9 +81,9 @@ const SkillSelection = ({ skills, onSkillAdd }) => {
           onChange={(event) => setSelectedSkill(event.target.value)}
         >
           <option value="">-- Wähle eine Fähigkeit aus --</option>
-          {skills.map((skill) => (
-            <option key={skill} value={skill}>
-              {skill}
+          {[...new Set(skills.map((skill) => skill.name))].map((name) => (
+            <option key={name} value={name}>
+              {name}
             </option>
           ))}
         </SkillSelect>

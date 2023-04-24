@@ -29,7 +29,7 @@ const PreviewCardName = styled.h2`
   font-weight: bolder;
 `;
 
-function CompanyPreviewCard({ logo, name, id }) {
+function CompanyPreviewCard({ id, name, logo }) {
   return (
     <PreviewCard>
       <Link href={`/company/${id}`}>

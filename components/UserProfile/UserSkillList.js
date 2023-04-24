@@ -10,13 +10,14 @@ const ListContainer = styled.div`
 `;
 
 const UserSkillList = ({ skills, onSkillLevelChange, onSkillRemove }) => {
+  console.log("skillsUSERSKILLLISTWO", skills);
   return (
     <ListContainer>
       {skills.map((userSkill) => (
         <SkillItem
-          key={userSkill.name}
-          skill={userSkill.name}
-          skillLevel={userSkill.level}
+          key={userSkill.skill_name}
+          skill={userSkill.skill_name}
+          skillLevel={userSkill.skill_level}
           onSkillLevelChange={onSkillLevelChange}
           onSkillRemove={onSkillRemove}
         />

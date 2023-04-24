@@ -1,5 +1,6 @@
 import Link from "next/link";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser, faHeart, faHome } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 
 const Nav = styled.nav`
@@ -47,10 +48,14 @@ function Navbar() {
       <Nav>
         <ul>
           <li>
-            <Link href="/">Startseite</Link>
+            <Link href="/">
+              <FontAwesomeIcon icon={faHome} className="fa-icon" />
+            </Link>{" "}
           </li>
           <li>
-            <Link href="/user/profil">Mein Profil</Link>
+            <Link href="/user/profil">
+              <FontAwesomeIcon icon={faUser} className="fa-icon" />
+            </Link>
           </li>
           <li>
             <Link href="/user/matches">Matches</Link>

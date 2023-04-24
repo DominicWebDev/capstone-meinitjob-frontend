@@ -1,6 +1,7 @@
 {
   "id": 1,
-  "name": "Dominic",
+  "firstname": "Dominic",
+  "lastname": "Matte",
   "availability": "germany",
   "email": "mattedominic@gmx.de",
   "image": "https://source.boringavatars.com/beam/300/333?colors=2f70e9,e76f51,ffc638,f4a261,e97c2f",

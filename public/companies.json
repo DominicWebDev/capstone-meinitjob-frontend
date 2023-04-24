@@ -11,7 +11,7 @@
     "homepage": "https://innovative-software.de",
     "description": "Die Innovative Software GmbH ist ein junges und aufstrebendes Softwareunternehmen mit Sitz in Deutschland. Unser engagiertes Team von Entwicklern und Ingenieuren arbeitet ständig daran, innovative Lösungen zu entwickeln, die unseren Kunden helfen, ihre Geschäftsziele zu erreichen und ihre Produktivität zu steigern.",
     "logo": "1-innovative-software-512x512.png",
-    "lookingfor": "react"
+    "lookingfor": [{ "name": "JavaScript", "level": 3 }]
   },
   {
     "id": 2,
@@ -25,7 +25,7 @@
     "homepage": "https://global-it-solutions.com",
     "description": "Global IT Solutions Ltd. ist ein führender Anbieter von IT-Lösungen für Unternehmen weltweit. Unser engagiertes Team von Experten arbeitet eng mit unseren Kunden zusammen, um individuelle Lösungen zu entwickeln, die ihren spezifischen Anforderungen entsprechen und ihnen dabei helfen, ihre Geschäftsziele zu erreichen.",
     "logo": "2-global-it-solutions-512x512.png",
-    "lookingfor": "react"
+    "lookingfor": [{ "name": "JavaScript", "level": 2 }]
   },
   {
     "id": 3,
@@ -38,7 +38,8 @@
     "established": 2015,
     "homepage": "https://future-technologies.de",
     "description": "Die Future Technologies GmbH ist ein führender Anbieter von fortschrittlichen Lösungen für Künstliche Intelligenz und maschinelles Lernen. Unsere Experten helfen unseren Kunden dabei, innovative Technologien zu nutzen, um ihr Geschäft zu transformieren und ihre Produktivität zu steigern.",
-    "logo": "3-future-technologies-512x512.png"
+    "logo": "3-future-technologies-512x512.png",
+    "lookingfor": [{ "name": "JavaScript", "level": 1 }]
   },
   {
     "id": 4,
