@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useSwipeable } from "react-swipeable";
 import styled from "styled-components";
 
+import TinderCard from "react-tinder-card";
 import UnswipedMatchCard from "../MatchCards/UnswipedMatchCard";
 
 const StyledUnswipedMatchListContainer = styled.div`
@@ -32,6 +33,25 @@ const UnswipedMatchList = ({
     preventScrollOnSwipe: true,
     trackMouse: true,
   });
+
+  const onSwipe = (direction) => {
+    console.log("You swiped: " + direction);
+  };
+
+  const onCardLeftScreen = (myIdentifier) => {
+    console.log(myIdentifier + " left the screen");
+  };
+
+  return (
+    <TinderCard
+      className="pressable"
+      onSwipe={onSwipe}
+      onCardLeftScreen={() => onCardLeftScreen("fooBar")}
+      preventSwipe={["right", "left"]}
+    >
+      Hello, World!
+    </TinderCard>
+  );
 
   return (
     <StyledUnswipedMatchListContainer {...handlers}>
