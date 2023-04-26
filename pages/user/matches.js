@@ -143,7 +143,7 @@ const Matches = () => {
         (company) => company.id !== storeSelectedCompanySkills[0].fk_company_id
       )
     ); */
-    toast.success("Unternehmen akzeptiert!", {
+    /*  toast.success("Unternehmen akzeptiert!", {
       position: "top-center",
       autoClose: 2000,
       hideProgressBar: false,
@@ -153,7 +153,7 @@ const Matches = () => {
       draggable: false,
       theme: "colored",
     });
-    toast.clearWaitingQueue();
+    toast.clearWaitingQueue(); */
   };
 
   const handleSwipedLeft = (matchId) => {
@@ -167,7 +167,7 @@ const Matches = () => {
       });
     });
 
-    toast.success("Unternehmen ignoriert!", {
+    /*  toast.success("Unternehmen ignoriert!", {
       position: "top-center",
       autoClose: 2000,
       hideProgressBar: false,
@@ -177,7 +177,7 @@ const Matches = () => {
       draggable: false,
       theme: "colored",
     });
-    toast.clearWaitingQueue();
+    toast.clearWaitingQueue(); */
     /* TODO: SEND TO BACKEND AND REFETCH! */
     /* IGNORE */
   };
