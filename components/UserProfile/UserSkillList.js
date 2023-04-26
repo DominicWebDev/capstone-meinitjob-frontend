@@ -1,28 +1,43 @@
 import styled from "styled-components";
+
+import SkillDropdown from "./SkillDropdown";
 import SkillItem from "./SkillItem";
 
-const ListContainer = styled.div`
+const StyledListContainer = styled.div`
   margin-top: 12px;
   display: flex;
   flex-wrap: wrap;
-  border: 1px solid blue;
+  flex-direction: row;
   font-size: 0.9rem;
+  gap: 8px;
+  justify-content: space-between;
+  /* border: 1px solid red; */
+  padding: auto;
+
+  @media (min-width: 480px) {
+    flex-direction: row;
+  }
 `;
 
-const UserSkillList = ({ skills, onSkillLevelChange, onSkillRemove }) => {
-  console.log("skillsUSERSKILLLISTWO", skills);
+const UserSkillList = ({ userSkills, onSkillLevelChange, onSkillRemove }) => {
+  console.log("THESE ARE MY USER SKILLS", userSkills);
   return (
-    <ListContainer>
-      {skills.map((userSkill) => (
-        <SkillItem
-          key={userSkill.skill_name}
-          skill={userSkill.skill_name}
-          skillLevel={userSkill.skill_level}
-          onSkillLevelChange={onSkillLevelChange}
-          onSkillRemove={onSkillRemove}
-        />
-      ))}
-    </ListContainer>
+    <>
+      <StyledListContainer>
+        {userSkills
+          .sort((a, b) => b.skill_level - a.skill_level)
+          .map((userSkill) => (
+            <SkillItem
+              key={userSkill.skill_name}
+              id={userSkill.id}
+              skill={userSkill.skill_name}
+              skillLevel={userSkill.skill_level}
+              onSkillLevelChange={onSkillLevelChange}
+              onSkillRemove={onSkillRemove}
+            />
+          ))}
+      </StyledListContainer>
+    </>
   );
 };
 

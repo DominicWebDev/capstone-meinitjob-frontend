@@ -1,10 +1,11 @@
-import { useSwipeable } from "react-swipeable";
-import CompanyPreviewCard from "../CompanyPreviewCard";
-import styled from "styled-components";
 import { useState } from "react";
-import CompanyMatchingCard from "./CompanyMatchingCard";
 
-const StyledUnacceptedCompaniesContainer = styled.div`
+import { useSwipeable } from "react-swipeable";
+import styled from "styled-components";
+
+import UnswipedMatchCard from "../MatchCards/UnswipedMatchCard";
+
+const StyledUnswipedMatchListContainer = styled.div`
   height: 220px;
 `;
 
@@ -14,12 +15,17 @@ const StyledPreviewContainer = styled.div`
   flex-direction: column;
 `;
 
-const UnacceptedCompanies = ({
+const UnswipedMatchList = ({
   currentCardIndex,
   unmatchedCompanies,
   onSwipedRight,
   onSwipedLeft,
 }) => {
+  console.log(
+    "~~~~~ PFERD UnswipedMatchList THESE UNMATCHED MATCHES ARRIVED IN PROPS",
+    unmatchedCompanies
+  );
+
   const handlers = useSwipeable({
     onSwipedRight: () => onSwipedRight(currentCardIndex),
     onSwipedLeft: () => onSwipedLeft(currentCardIndex),
@@ -29,13 +35,13 @@ const UnacceptedCompanies = ({
   });
 
   return (
-    <StyledUnacceptedCompaniesContainer {...handlers}>
+    <StyledUnswipedMatchListContainer {...handlers}>
       {unmatchedCompanies
         .sort((a, b) => b.matchingScore - a.matchingScore)
         .map(({ id, name, logo }, index) => {
           return (
             <StyledPreviewContainer key={id}>
-              <CompanyMatchingCard
+              <UnswipedMatchCard
                 id={id}
                 name={name}
                 logo={logo}
@@ -49,8 +55,8 @@ const UnacceptedCompanies = ({
             </StyledPreviewContainer>
           );
         })}
-    </StyledUnacceptedCompaniesContainer>
+    </StyledUnswipedMatchListContainer>
   );
 };
 
-export default UnacceptedCompanies;
+export default UnswipedMatchList;

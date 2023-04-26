@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+
 import UserSkillList from "./UserSkillList";
 import SkillSelection from "./SkillSelection";
 import useSkillStore from "../../slices/CreateSkillSlice";
@@ -9,64 +11,139 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+  min-height: 100vh;
   overflow-y: scroll;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  background-color: #f8f9fa;
+  border-radius: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 35px;
 `;
 const InputContainer = styled.div`
   display: flex;
-  align-items: center;
-  margin-bottom: 16px;
+  flex-direction: column;
+  margin-bottom: 0.5rem;
 `;
-
+const StyledH1 = styled.h1`
+  font-size: 3rem;
+  text-align: center;
+  color: black;
+  margin-bottom: 0.3rem;
+  margin-top: 8px;
+`;
+const StyledH2 = styled.h2`
+  font-size: 2.3rem;
+  text-align: center;
+  color: black;
+  margin-bottom: 0.3rem;
+  margin-top: 40px;
+`;
 const Button = styled.button`
-  padding: 6px 8px;
-  border-radius: 4px;
+  padding: 0.8rem;
+  border-radius: 0.5rem;
   border: none;
   background-color: #0070f3;
   color: white;
   cursor: pointer;
+  font-size: 0.8rem;
+  margin-top: 1rem;
+  font-size: 1rem;
 
   &:hover {
     background-color: #0061d1;
   }
 `;
 const Label = styled.label`
-  margin-right: 8px;
-  font-size: 1rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #333;
+  margin-top: 0.3rem;
 `;
+
 const TextArea = styled.textarea`
-  margin-bottom: 16px;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  border: 2px solid #ccc;
+  border-radius: 0.5rem;
+  transition: border-color 0.3s;
+
+  /* Increase the height of the textarea */
+  height: 200px;
+
+  &:focus {
+    border-color: #0070f3;
+    outline: transparent;
+  }
 `;
 
 const Select = styled.select`
-  margin-bottom: 16px;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  border: 2px solid #ccc;
+  border-radius: 0.5rem;
+  border: 2px solid #ccc;
+  border-radius: 0.5rem;
+  transition: border-color 0.3s;
+
+  &:focus {
+    border-color: #0070f3;
+    outline: transparent;
+  }
+
+  -webkit-appearance: none; /* Verhindert das standardmäßige Styling des Select-Elements */
+  -moz-appearance: none;
+  appearance: none;
+
+  background-image: url("https://cdn-icons-png.flaticon.com/512/2985/2985150.png");
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: 20px;
+  padding-right: 30px;
+  background-position: right 10px center;
 `;
 
 const Input = styled.input`
-  padding: 8px;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  border: 2px solid #ccc;
+  border-radius: 0.5rem;
+  border: 2px solid #ccc;
+  border-radius: 0.5rem;
+  transition: border-color 0.3s;
+
+  &:focus-visible {
+    outline: transparent;
+  }
+
+  &:focus {
+    border-color: #0070f3;
+    outline: transparent;
+  }
+`;
+
+const SaveButton = styled.button`
+  padding: 8px 16px;
+  border-radius: 12px;
   border: none;
-  border-radius: 4px;
-  font-size: 1rem;
+  background-color: #0070f3;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  margin-top: 12px;
+  margin-left: auto;
+  margin-right: auto;
+
+  &:hover {
+    background-color: #56b0f5;
+  }
 `;
 
-const ProfileDescription = styled.p`
-  margin-top: 8px;
-  text-align: center;
-  height: 200px; /* oder jede andere Höhe, die du bevorzugst */
-  overflow-y: scroll;
+const ProfileImage = styled.img`
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
 `;
-
-/* const PrivatProfileContainer = styled.div``;
-const ProfileAvailability = styled.div`
-  margin-top: 8px;
-`;
-
-const ProfilePreference = styled.div`
-  margin-top: 8px;
-`;
-const ProfileHeadline = styled.h3`
-  color: #f14f4a;
-  font-size: 1rem;
-`; */
 
 const UserProfile = ({ user, onSubmit, user_id = 1, onUpdateUser }) => {
   const [first_name, setFirst_Name] = useState(user.first_name);
@@ -117,9 +194,22 @@ const UserProfile = ({ user, onSubmit, user_id = 1, onUpdateUser }) => {
     if (userSkillList.find((userSkill) => userSkill.fk_skill_id === skill_id))
       /* TODO: CHECK AGAIN WHEN USERSKILL LIST IS AVAILABLE IN STORE */
       return;
-    storeAddUserSkill(skill_id, user_id).then(() =>
-      storeFetchUserSkillsByUserId(user_id)
-    );
+    storeAddUserSkill(skill_id, user_id).then(() => {
+      storeFetchUserSkillsByUserId(user_id);
+
+      toast.success("Skill hinzugefügt!", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeButton: false,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
+      toast.clearWaitingQueue();
+    });
 
     /*  setUserSkillList((prevUserSkillList) => [
       ...prevUserSkillList,
@@ -128,15 +218,33 @@ const UserProfile = ({ user, onSubmit, user_id = 1, onUpdateUser }) => {
     /* TODO: USE BACKEND REQUEST TO ADD USERSKILLLIST */
   };
   const deleteUserSkill = useUserStore((state) => state.deleteUserSkillById);
+  const storeUpdateUserSkill = useUserStore((state) => state.updateUserSkill);
+
   const handleUserSkillRemove = (skill_name, skill_level) => {
     /* setUserSkillList((prevUserSkillList) =>
       prevUserSkillList.filter((userSkill) => userSkill.name !== skill)
     ); */
     const skillID = findSkillInSkillStore(skill_name, skill_level);
 
-    deleteUserSkill(user_id, skillID).then(() =>
-      storeFetchUserSkillsByUserId(user_id)
-    );
+    const calculateRows = (text) => {
+      return text.split("\n").length;
+    };
+    deleteUserSkill(user_id, skillID).then(() => {
+      storeFetchUserSkillsByUserId(user_id);
+
+      toast.success("Skill gelöscht!", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeButton: false,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
+      toast.clearWaitingQueue();
+    });
   };
   const findSkillInSkillStore = (skillName, level) => {
     const foundSkill = storeUserSkills.find((skill) => {
@@ -148,15 +256,38 @@ const UserProfile = ({ user, onSubmit, user_id = 1, onUpdateUser }) => {
     return foundSkill.fk_skill_id;
   };
 
-  const handleUserSkillLevelChange = (skill, level) => {
-    setUserSkillList((prevUserSkillList) => {
+  const handleUserSkillLevelChange = (id, name, level) => {
+    console.log("RECEIVED handleUserSkillLevelChange id", id);
+    console.log("RECEIVED handleUserSkillLevelChange id", name);
+    console.log("RECEIVED handleUserSkillLevelChange level", level);
+
+    storeUpdateUserSkill(id, name, level).then(() => {
+      storeFetchUserSkillsByUserId(user_id);
+
+      toast.success("Skill Level geändert!", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeButton: false,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
+      toast.clearWaitingQueue();
+    });
+
+    /* TODO: SEND HERE TO BACKEND AND REFETCH NEW SKILLLIST! */
+
+    /* setUserSkillList((prevUserSkillList) => {
       return prevUserSkillList.map((userSkill) => {
         if (userSkill.name === skill) {
           return { ...userSkill, level };
         }
         return userSkill;
       });
-    });
+    }); */
   };
 
   const handleSubmit = (event) => {
@@ -184,14 +315,32 @@ const UserProfile = ({ user, onSubmit, user_id = 1, onUpdateUser }) => {
       description
     ).then(() => {
       onUpdateUser();
+
+      toast.success("Nutzerdaten aktualisiert!", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeButton: false,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
+      toast.clearWaitingQueue();
     });
   };
 
   return (
     <Container>
+      <StyledH1>Dein Profil</StyledH1>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <ProfileImage src={user.image} alt={`${user.name}`} />
+      </div>
+
       <form onSubmit={handleSubmit}>
         <InputContainer>
-          <Label>Vorname:</Label>
+          <Label>Vorname</Label>
           <Input
             type="text"
             value={first_name}
@@ -200,7 +349,7 @@ const UserProfile = ({ user, onSubmit, user_id = 1, onUpdateUser }) => {
           />
         </InputContainer>
         <InputContainer>
-          <Label>Nachname:</Label>
+          <Label>Nachname</Label>
           <Input
             type="text"
             value={last_name}
@@ -208,17 +357,9 @@ const UserProfile = ({ user, onSubmit, user_id = 1, onUpdateUser }) => {
             placeholder=" Müller"
           />
         </InputContainer>
+
         <InputContainer>
-          <Label>Profilbild URL:</Label>
-          <Input
-            type="text"
-            value={image}
-            onChange={(event) => setImage(event.target.value)}
-            placeholder="https://example.com"
-          />
-        </InputContainer>
-        <InputContainer>
-          <Label>Kontakt Email:</Label>
+          <Label>Kontakt Email</Label>
           <Input
             type="email"
             value={email}
@@ -228,7 +369,7 @@ const UserProfile = ({ user, onSubmit, user_id = 1, onUpdateUser }) => {
         </InputContainer>
 
         <InputContainer>
-          <Label>Präferenz:</Label>
+          <Label>Bevorzugter Arbeitsort</Label>
           <Select
             value={pref_remote}
             onChange={(event) => setPref_Remote(event.target.value)}
@@ -238,7 +379,7 @@ const UserProfile = ({ user, onSubmit, user_id = 1, onUpdateUser }) => {
           </Select>
         </InputContainer>
         <InputContainer>
-          <Label>Unternehmensgröße:</Label>
+          <Label>Bevorzugter Unternehmensgröße</Label>
           <Select
             value={pref_company_size}
             onChange={(event) => setPref_company_size(event.target.value)}
@@ -252,7 +393,7 @@ const UserProfile = ({ user, onSubmit, user_id = 1, onUpdateUser }) => {
           </Select>
         </InputContainer>
         <InputContainer>
-          <Label>Branche:</Label>
+          <Label>Bevorzugte Branche</Label>
           <Select
             value={pref_sector}
             onChange={(event) => setPref_sector(event.target.value)}
@@ -280,28 +421,46 @@ const UserProfile = ({ user, onSubmit, user_id = 1, onUpdateUser }) => {
           </Select>
         </InputContainer>
         <InputContainer>
-          <Label>Beschreibung:</Label>
+          <Label>Beschreibung</Label>
           <TextArea
             placeholder="ein paar Worte über dich"
             value={description}
             onChange={(event) => setDescription(event.target.value)}
           />
         </InputContainer>
-        <Button type="submit">Speichern</Button>
+        <SaveButton type="submit">Meine Daten aktualisieren</SaveButton>
       </form>
+      <StyledH2>Deine Skills</StyledH2>
       {storeSkills.length && (
-        <SkillSelection skills={storeSkills} onSkillAdd={handleUserSkillAdd} />
+        <SkillSelection
+          skills={storeSkills.filter(
+            (skill) =>
+              !userSkillList.some(
+                (userSkill) => userSkill.skill_name === skill.name
+              )
+          )}
+          onSkillAdd={handleUserSkillAdd}
+        />
       )}
-
-      <UserSkillList
-        skills={userSkillList}
-        onSkillLevelChange={handleUserSkillLevelChange}
-        onSkillRemove={handleUserSkillRemove}
-      />
-
-      <ProfileDescription>{user.description}</ProfileDescription>
+      <div style={{ marginBottom: "25px", marginTop: "8px" }}>
+        <UserSkillList
+          userSkills={userSkillList}
+          onSkillLevelChange={handleUserSkillLevelChange}
+          onSkillRemove={handleUserSkillRemove}
+        />
+      </div>
     </Container>
   );
 };
 
 export default UserProfile;
+
+/*     <InputContainer>
+          <Label>Profilbild URL</Label>
+          <Input
+            type="text"
+            value={image}
+            onChange={(event) => setImage(event.target.value)}
+            placeholder="https://example.com"
+          />
+        </InputContainer> */

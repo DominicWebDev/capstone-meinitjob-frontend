@@ -5,6 +5,8 @@ import useCompanyStore from "../../slices/CreateCompanySlice";
 
 function CompanyDetailsPage() {
   const router = useRouter();
+  const [companyId, setCompanyId] = useState(null);
+
   const { cid } = router.query;
 
   const storeFetchCompanyById = useCompanyStore(
@@ -15,8 +17,16 @@ function CompanyDetailsPage() {
   );
 
   useEffect(() => {
-    storeFetchCompanyById(+cid); /* + converts a string to an integer */
-  }, []);
+    if (router.query.cid) {
+      setCompanyId(+router.query.cid); /* + converts a string to an integer */
+    }
+  }, [router.query]);
+
+  useEffect(() => {
+    if (companyId) {
+      storeFetchCompanyById(companyId);
+    }
+  }, [companyId]);
 
   return (
     <>

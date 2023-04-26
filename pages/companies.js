@@ -7,17 +7,19 @@ import useCompanyStore from "../slices/CreateCompanySlice";
 const CompaniesPageContainer = styled.div`
   width: 100vw;
   max-width: 100vw;
+  margin-bottom: 60px;
 `;
 const CompanieHeadline = styled.h1`
   text-align: center;
-  color: #ff8509;
+  color: black;
 `;
 
 const CompaniesCardContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  grid-gap: 16px;
+  grid-gap: 4px;
   margin: 16px;
+  margin-bottom: 5px;
 
   @media (max-width: 768px) {
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -28,7 +30,7 @@ export default function CompaniesPage() {
   const [companies, setCompanies] = useState([]);
   const [filteredCompanies, setFilteredCompanies] = useState([]);
   const [filterOptions, setFilterOptions] = useState({
-    remote: false,
+    remote: null,
     numberOfEmployees: null,
   });
 
@@ -77,7 +79,7 @@ export default function CompaniesPage() {
   return (
     <CompaniesPageContainer>
       <CompanieHeadline>
-        {filteredCompanies.length} Partnerunternehmen
+        {filteredCompanies.length} Unternehmen
       </CompanieHeadline>
       <CompanyFilter
         filterOptions={filterOptions}
@@ -92,6 +94,7 @@ export default function CompaniesPage() {
             name={company.name}
             logo={company.logo}
             id={company.id}
+            imageSize={150}
           />
         ))}
       </CompaniesCardContainer>

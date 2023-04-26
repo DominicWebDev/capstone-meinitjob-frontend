@@ -1,11 +1,11 @@
 import { create } from "zustand";
-
 import { devtools } from "zustand/middleware";
 
 export const createUserSlice = (set) => ({
   users: [],
   selectedUser: null,
   userSkills: [],
+  matches: [],
 
   fetchUsers: async () => {
     const response = await fetch(
@@ -14,7 +14,6 @@ export const createUserSlice = (set) => ({
     set({ users: await response.json() });
   },
   fetchUserById: async (id) => {
-    console.log(id, "WoistderFehler");
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/v1/users/${id}`
     );
@@ -43,7 +42,6 @@ export const createUserSlice = (set) => ({
     pref_sector,
     description
   ) => {
-    console.log("sssssss", id);
     await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/v1/users/`, {
       body: JSON.stringify({
         id,
@@ -69,15 +67,25 @@ export const createUserSlice = (set) => ({
   },
   deleteUserSkillById: async (user_id, skill_id) => {
     await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/v1/users/${user_id}/skills/${skill_id}`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/v1/users/${user_id}/skill/${skill_id}`,
       {
         method: "DELETE",
       }
     );
   },
+  updateUserSkill: async (id, name, level) => {
+    await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/v1/users/skill`, {
+      body: JSON.stringify({
+        id,
+        name,
+        level,
+      }),
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+    });
+  },
   addUserSkill: async (fk_skill_id, fk_user_id) => {
-    console.log("addUserSkill", fk_skill_id, fk_user_id);
-    await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/v1/users/skills`, {
+    await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/v1/users/skill`, {
       body: JSON.stringify({
         fk_skill_id,
         fk_user_id,
@@ -85,6 +93,41 @@ export const createUserSlice = (set) => ({
       method: "POST",
       headers: { "Content-Type": "application/json" },
     });
+  },
+  fetchMatchesByUserId: async (user_id) => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/v1/users/matches/${user_id}`
+    );
+    const responseJson = await response.json();
+    set({ matches: responseJson?.matches ?? [] });
+  },
+  addMatch: async (fk_user_id, fk_company_id) => {
+    await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/v1/users/matches`, {
+      body: JSON.stringify({
+        fk_user_id,
+        fk_company_id,
+      }),
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    });
+  },
+  updateMatch: async (id, match_status) => {
+    await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/v1/users/matches`, {
+      body: JSON.stringify({
+        id,
+        match_status,
+      }),
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+    });
+  },
+  deleteMatch: async (id) => {
+    await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/v1/users/matches/${id}`,
+      {
+        method: "DELETE",
+      }
+    );
   },
 });
 

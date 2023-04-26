@@ -9,20 +9,21 @@ const Container = styled.div`
 
 const UserProfilePage = () => {
   const [user, setUser] = useState(null);
-  console.log(user, "WasistdasFüreiNUser");
+
   const storeSelectedUser = useUserStore((state) => state.selectedUser);
   const storeFetchUserById = useUserStore((state) => state.fetchUserById);
 
   /*   const [isDataFetched, setIsDataFetched] = useState(false); */
-
-  const [descriptionHeight, setDescriptionHeight] = useState(0);
 
   useEffect(() => {
     storeFetchUserById(1);
   }, []);
 
   useEffect(() => {
-    setUser(storeSelectedUser);
+    if (!user && storeSelectedUser) {
+      console.log(user, "user auf der UserProfilePage");
+      setUser(storeSelectedUser);
+    }
   }, [storeSelectedUser]);
 
   /*   useEffect(() => {
@@ -56,22 +57,7 @@ const UserProfilePage = () => {
           <div
             style={{ position: "relative", height: 0, overflow: "hidden" }}
             aria-hidden="true"
-          >
-            <textarea
-              value={user.description}
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                height: "100%",
-                width: "100%",
-                resize: "none",
-                border: "none",
-                outline: "none",
-              }}
-              onChange={handleDescriptionResize}
-            />
-          </div>
+          ></div>
         </>
       )}
     </Container>

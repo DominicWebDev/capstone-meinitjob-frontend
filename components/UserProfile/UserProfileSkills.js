@@ -28,7 +28,7 @@ const UserProfileSkills = ({ skills, onSkillLevelChange }) => {
 
   return (
     <div>
-      <h3>Fähigkeiten</h3>
+      <h3>Skills</h3>
       {skills.map((skill) => (
         <SkillContainer key={skill.skill}>
           <SkillName>{skill.skill}</SkillName>

@@ -1,8 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
+
 import styled from "styled-components";
 
-const MatchingCard = styled.div`
+const StyledMatchCardContainer = styled.div`
   border: 1.5px solid black;
   border-radius: 8px;
   padding: 8px;
@@ -15,13 +16,13 @@ const MatchingCard = styled.div`
   }
 `;
 
-const MatchingCardLogo = styled.div`
+const StyledMatchCardLogo = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
-const MatchingCardName = styled.h2`
+const StyledMatchCardName = styled.h2`
   text-align: center;
   word-break: break-all;
   font-size: 0.8rem;
@@ -30,13 +31,13 @@ const MatchingCardName = styled.h2`
   font-weight: bolder;
 `;
 
-function CompanyMatchingCard({ id, style, name, logo, hidden }) {
+function UnswipedMatchCard({ id, style, name, logo, hidden }) {
   return (
     <div style={style}>
       {!hidden && (
-        <MatchingCard>
+        <StyledMatchCardContainer>
           <Link href={`/company/${id}`}>
-            <MatchingCardLogo>
+            <StyledMatchCardLogo>
               {logo && name && (
                 <Image
                   src={`/logos/${logo}`}
@@ -46,13 +47,13 @@ function CompanyMatchingCard({ id, style, name, logo, hidden }) {
                   priority
                 />
               )}
-              <MatchingCardName>{name}</MatchingCardName>
-            </MatchingCardLogo>
+              <StyledMatchCardName>{name}</StyledMatchCardName>
+            </StyledMatchCardLogo>
           </Link>
-        </MatchingCard>
+        </StyledMatchCardContainer>
       )}
     </div>
   );
 }
 
-export default CompanyMatchingCard;
+export default UnswipedMatchCard;

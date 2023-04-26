@@ -1,15 +1,38 @@
-import Link from "next/link";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 import styled from "styled-components";
+
 import CompanyPreviewCard from "../components/CompanyPreviewCard";
 import useCompanyStore from "../slices/CreateCompanySlice";
+import LoginButton from "../components/LoginButton";
 
 const LandingPageContainer = styled.div`
   display: flex;
   flex-direction: column;
   max-width: 100vw;
   align-items: center;
+  margin-bottom: 80px;
+`;
+
+const Title = styled.h1`
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+  margin-top: 8px;
+  color: black;
+`;
+const StyledButton = styled.button`
+  background-color: white;
+  color: #21262e;
+  padding: 8px 16px;
+  box-shadow: 0 2px 6px 0px rgba(101, 110, 123, 0.12);
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  border-radius: 15px;
+  margin-top: 10px;
 `;
 
 export default function LandingPage() {
@@ -35,7 +58,7 @@ export default function LandingPage() {
 
   return (
     <LandingPageContainer>
-      <h1>Unternehmen</h1>
+      <Title>Unternehmen</Title>
       <div>
         {companies.map((company) => (
           <CompanyPreviewCard
@@ -46,8 +69,9 @@ export default function LandingPage() {
           />
         ))}
       </div>
+
       <Link href="/companies">
-        <button>Alle Unternehmen</button>
+        <StyledButton>Alle Unternehmen</StyledButton>
       </Link>
     </LandingPageContainer>
   );

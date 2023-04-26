@@ -3,16 +3,24 @@ import Image from "next/image";
 import styled from "styled-components";
 
 const PreviewCard = styled.div`
-  border: 1.5px solid black;
-  border-radius: 8px;
-  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
+  background-color: #ffffff;
+  padding: 16px;
   margin: 8px;
   max-width: 200px;
-  /* height: 150px;
-  width: 200px; */
-  background-color: #ff8509;
+  text-align: center;
+  background: linear-gradient(90deg, #f85440 0%, #f82978 100%);
+
   a {
     text-decoration: none;
+    color: #000000;
+    font-size: 18px;
+    font-weight: bold;
   }
 `;
 
@@ -23,15 +31,15 @@ const PreviewCardLogo = styled.div`
 `;
 
 const PreviewCardName = styled.h2`
-  text-align: center;
-  word-break: break-all;
-  font-size: 0.8rem;
-  text-decoration: none;
-  color: #208e16;
-  font-weight: bolder;
+  font-size: 18px;
+  margin-bottom: 8px;
+  max-width: 180px;
+  word-break: break-word;
+  color: white;
+  margin-top: 4px;
 `;
 
-function CompanyPreviewCard({ id, name, logo }) {
+function CompanyPreviewCard({ id, name, logo, imageSize = 180 }) {
   return (
     <PreviewCard>
       <Link href={`/company/${id}`}>
@@ -40,8 +48,8 @@ function CompanyPreviewCard({ id, name, logo }) {
             <Image
               src={`/logos/${logo}`}
               alt={`${name} logo`}
-              width={100}
-              height={100}
+              width={imageSize}
+              height={imageSize}
               priority
             />
           )}
