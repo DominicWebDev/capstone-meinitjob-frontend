@@ -59,7 +59,7 @@ const CompanyDataBoxContact = ({ company }) => {
       <p>
         <StyledSVG
           id="Layer_1"
-          enable-background="new 0 0 512 512"
+          enablBackground="new 0 0 512 512"
           height="25"
           viewBox="0 0 512 512"
           width="25"

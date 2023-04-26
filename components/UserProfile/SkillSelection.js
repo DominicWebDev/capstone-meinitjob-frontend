@@ -111,11 +111,13 @@ const SkillSelection = ({ skills, onSkillAdd }) => {
           onChange={(event) => setSelectedSkill(event.target.value)}
         >
           <option value="">-- Wähle deinen Skill aus --</option>
-          {[...new Set(skills.map((skill) => skill.name))].map((name) => (
-            <option key={name} value={name}>
-              {name}
-            </option>
-          ))}
+          {[...new Set(skills.map((skill) => skill.name))]
+            .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
+            .map((name) => (
+              <option key={name} value={name}>
+                {name}
+              </option>
+            ))}
         </SkillSelect>
         <SkillRadioSelection
           onSkillLevelChange={setSelectedLevel}

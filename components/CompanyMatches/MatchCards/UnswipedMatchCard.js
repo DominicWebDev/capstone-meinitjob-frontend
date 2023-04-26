@@ -31,27 +31,25 @@ const StyledMatchCardName = styled.h2`
   font-weight: bolder;
 `;
 
-function UnswipedMatchCard({ id, style, name, logo, hidden }) {
+function UnswipedMatchCard({ company, style }) {
   return (
     <div style={style}>
-      {!hidden && (
-        <StyledMatchCardContainer>
-          <Link href={`/company/${id}`}>
-            <StyledMatchCardLogo>
-              {logo && name && (
-                <Image
-                  src={`/logos/${logo}`}
-                  alt={`${name} logo`}
-                  width={100}
-                  height={100}
-                  priority
-                />
-              )}
-              <StyledMatchCardName>{name}</StyledMatchCardName>
-            </StyledMatchCardLogo>
-          </Link>
-        </StyledMatchCardContainer>
-      )}
+      <StyledMatchCardContainer>
+        <Link href={`/company/${company.id}`}>
+          <StyledMatchCardLogo>
+            {company.logo && company.name && (
+              <Image
+                src={`/logos/${company.logo}`}
+                alt={`${company.name} logo`}
+                width={100}
+                height={100}
+                priority
+              />
+            )}
+            <StyledMatchCardName>{company.name}</StyledMatchCardName>
+          </StyledMatchCardLogo>
+        </Link>
+      </StyledMatchCardContainer>
     </div>
   );
 }

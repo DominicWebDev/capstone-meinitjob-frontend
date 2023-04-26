@@ -1,4 +1,6 @@
+import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 
 import useCompanyStore from "../../slices/CreateCompanySlice";
 import useUserStore from "../../slices/CreateUserSlice";
@@ -10,10 +12,11 @@ import NoMatches from "../../components/CompanyMatches/NoMatches";
 import SwipedMatchList from "../../components/CompanyMatches/MatchLists/SwipedMatchList";
 
 const Matches = () => {
+  const router = useRouter();
+
   const [userMatches, setUserMatches] = useState([]);
   const [isFetchingMatches, setIsFetchingMatches] = useState(false);
   const [isAddingMatches, setIsAddingMatches] = useState(false);
-  const [currentCardIndex, setCurrentCardIndex] = useState(0);
 
   /* TODO: DYNAMIC USER ID FROM LOGIN */
   const user_id = "1";
@@ -61,11 +64,41 @@ const Matches = () => {
     (match) => match.match_status === "ignored"
   );
 
-  const unmatchedCompanies = storeCompanies.filter((company) =>
-    unmatchedMatches.some(
-      (unmatchedMatch) => unmatchedMatch.fk_user_id === company.id
+  let unmatchedCompanies = storeCompanies
+    .filter((company) =>
+      unmatchedMatches.some(
+        (unmatchedMatch) => unmatchedMatch.fk_company_id === company.id
+      )
     )
-  );
+    .map((company) => ({
+      ...company,
+      match_id: unmatchedMatches.find(
+        (unmatchedMatch) => unmatchedMatch.fk_company_id === company.id
+      ).id,
+    }));
+
+  function refreshPage() {
+    router.reload();
+  }
+
+  const getUnmatchedCompanies = () => {
+    const unmatchedMatches = userMatches.filter(
+      (match) => match.match_status === "unmatched"
+    );
+
+    return (unmatchedCompanies = storeCompanies
+      .filter((company) =>
+        unmatchedMatches.some(
+          (unmatchedMatch) => unmatchedMatch.fk_company_id === company.id
+        )
+      )
+      .map((company) => ({
+        ...company,
+        match_id: unmatchedMatches.find(
+          (unmatchedMatch) => unmatchedMatch.fk_company_id === company.id
+        ).id,
+      })));
+  };
 
   const acceptedCompanies = storeCompanies.filter((company) =>
     acceptedMatches.some(
@@ -80,21 +113,71 @@ const Matches = () => {
   );
 
   /* TODO: HANDLE SWIPES WITH NEW DATABASE REQUESTS */
-  const handleSwipedRight = (cardIndex) => {
-    console.log("swipeRIGHT");
-    setCurrentCardIndex((prevCardIndex) => prevCardIndex + 1);
+  const handleSwipedRight = (matchId) => {
+    console.log("swipeRIGHT matchId: ", matchId);
+    console.log("____isFetchingMatches !!!! _---____", isFetchingMatches);
     /* ACCEPT */
+    storeUpdateMatch(matchId, "accepted").then(() => {
+      setUserMatches([]);
+
+      storeFetchMatchesByUserId(user_id).then(() => {
+        setIsFetchingMatches(true);
+        refreshPage();
+        /*  unmatchedCompanies = storeCompanies
+          .filter((company) =>
+            unmatchedMatches.some(
+              (unmatchedMatch) => unmatchedMatch.fk_company_id === company.id
+            )
+          )
+          .map((company) => ({
+            ...company,
+            match_id: unmatchedMatches.find(
+              (unmatchedMatch) => unmatchedMatch.fk_company_id === company.id
+            ).id,
+          })); */
+      });
+    });
     /* TODO: SEND TO BACKEND AND REFETCH! */
     /* setUserMatches((prevUnacceptedCompanies) =>
       prevUnacceptedCompanies.filter(
         (company) => company.id !== storeSelectedCompanySkills[0].fk_company_id
       )
     ); */
+    toast.success("Unternehmen akzeptiert!", {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeButton: false,
+      closeOnClick: false,
+      pauseOnHover: false,
+      draggable: false,
+      theme: "colored",
+    });
+    toast.clearWaitingQueue();
   };
 
-  const handleSwipedLeft = (cardIndex) => {
-    console.log("swipeLeft");
-    setCurrentCardIndex((prevCardIndex) => prevCardIndex + 1);
+  const handleSwipedLeft = (matchId) => {
+    console.log("swipeLeft matchId: ", matchId);
+    console.log("____isFetchingMatches !!!! _---____", isFetchingMatches);
+    storeUpdateMatch(matchId, "ignored").then(() => {
+      setUserMatches([]);
+      storeFetchMatchesByUserId(user_id).then(() => {
+        setIsFetchingMatches(true);
+        refreshPage();
+      });
+    });
+
+    toast.success("Unternehmen ignoriert!", {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeButton: false,
+      closeOnClick: false,
+      pauseOnHover: false,
+      draggable: false,
+      theme: "colored",
+    });
+    toast.clearWaitingQueue();
     /* TODO: SEND TO BACKEND AND REFETCH! */
     /* IGNORE */
   };
@@ -227,8 +310,11 @@ const Matches = () => {
               Diese Unternehmen suchen dich!
             </h2>
             <UnswipedMatchList
-              currentCardIndex={currentCardIndex}
-              unmatchedCompanies={unmatchedCompanies}
+              bestUnswipedMatchCompany={
+                getUnmatchedCompanies().sort(
+                  (a, b) => b.matchingScore - a.matchingScore
+                )[0]
+              }
               onSwipedLeft={handleSwipedLeft}
               onSwipedRight={handleSwipedRight}
             />
@@ -237,16 +323,16 @@ const Matches = () => {
           <NoMatches />
         )}
       </div>
-      <div
-        style={{
-          background: "white",
-          paddingBottom: "16px",
-          paddingTop: "16px",
-          marginBottom: "20px",
-        }}
-      >
+      <div>
         {acceptedCompanies.length > 0 && (
-          <div>
+          <div
+            style={{
+              background: "white",
+              paddingBottom: "16px",
+              paddingTop: "16px",
+              marginBottom: "20px",
+            }}
+          >
             <SwipedMatchList
               matchedCompanies={acceptedCompanies}
               headlineText="Mit Unternehmen im Kontakt"
@@ -255,16 +341,16 @@ const Matches = () => {
           </div>
         )}
       </div>
-      <div
-        style={{
-          background: "white",
-          paddingBottom: "16px",
-          paddingTop: "16px",
-          marginBottom: "20px",
-        }}
-      >
+      <div>
         {ignoredCompanies.length > 0 && (
-          <div>
+          <div
+            style={{
+              background: "white",
+              paddingBottom: "16px",
+              paddingTop: "16px",
+              marginBottom: "20px",
+            }}
+          >
             <SwipedMatchList
               matchedCompanies={ignoredCompanies}
               headlineText="Unternehmen die du ignorierst"

@@ -200,12 +200,11 @@ const UserProfile = ({ user, onSubmit, user_id = 1, onUpdateUser }) => {
       toast.success("Skill hinzugefügt!", {
         position: "top-center",
         autoClose: 2000,
-        hideProgressBar: true,
+        hideProgressBar: false,
         closeButton: false,
         closeOnClick: false,
         pauseOnHover: false,
         draggable: false,
-        progress: undefined,
         theme: "colored",
       });
       toast.clearWaitingQueue();
@@ -235,12 +234,11 @@ const UserProfile = ({ user, onSubmit, user_id = 1, onUpdateUser }) => {
       toast.success("Skill gelöscht!", {
         position: "top-center",
         autoClose: 2000,
-        hideProgressBar: true,
+        hideProgressBar: false,
         closeButton: false,
         closeOnClick: false,
         pauseOnHover: false,
         draggable: false,
-        progress: undefined,
         theme: "colored",
       });
       toast.clearWaitingQueue();
@@ -267,12 +265,11 @@ const UserProfile = ({ user, onSubmit, user_id = 1, onUpdateUser }) => {
       toast.success("Skill Level geändert!", {
         position: "top-center",
         autoClose: 2000,
-        hideProgressBar: true,
+        hideProgressBar: false,
         closeButton: false,
         closeOnClick: false,
         pauseOnHover: false,
         draggable: false,
-        progress: undefined,
         theme: "colored",
       });
       toast.clearWaitingQueue();
@@ -319,12 +316,11 @@ const UserProfile = ({ user, onSubmit, user_id = 1, onUpdateUser }) => {
       toast.success("Nutzerdaten aktualisiert!", {
         position: "top-center",
         autoClose: 2000,
-        hideProgressBar: true,
+        hideProgressBar: false,
         closeButton: false,
         closeOnClick: false,
         pauseOnHover: false,
         draggable: false,
-        progress: undefined,
         theme: "colored",
       });
       toast.clearWaitingQueue();
@@ -375,21 +371,21 @@ const UserProfile = ({ user, onSubmit, user_id = 1, onUpdateUser }) => {
             onChange={(event) => setPref_Remote(event.target.value)}
           >
             <option value="true">Remote</option>
-            <option value="false">Vor Ort</option>
+            <option value="false">Büro</option>
           </Select>
         </InputContainer>
         <InputContainer>
-          <Label>Bevorzugter Unternehmensgröße</Label>
+          <Label>Bevorzugte Unternehmensgröße</Label>
           <Select
             value={pref_company_size}
             onChange={(event) => setPref_company_size(event.target.value)}
           >
-            <option value="1-10">1-10 Mitarbeiter</option>
-            <option value="10-100">10-100 Mitarbeiter</option>
-            <option value="100-250">100-250 Mitarbeiter</option>
-            <option value="250-500">250-500 Mitarbeiter</option>
-            <option value="500-1000">500-1000 Mitarbeiter</option>
-            <option value="1000+">über 1000 Mitarbeiter</option>
+            <option value="10">1-10 Mitarbeiter</option>
+            <option value="100">10-100 Mitarbeiter</option>
+            <option value="250">100-250 Mitarbeiter</option>
+            <option value="500">250-500 Mitarbeiter</option>
+            <option value="1000">500-1000 Mitarbeiter</option>
+            <option value="250000">über 1000 Mitarbeiter</option>
           </Select>
         </InputContainer>
         <InputContainer>
@@ -431,17 +427,23 @@ const UserProfile = ({ user, onSubmit, user_id = 1, onUpdateUser }) => {
         <SaveButton type="submit">Meine Daten aktualisieren</SaveButton>
       </form>
       <StyledH2>Deine Skills</StyledH2>
-      {storeSkills.length && (
-        <SkillSelection
-          skills={storeSkills.filter(
-            (skill) =>
-              !userSkillList.some(
-                (userSkill) => userSkill.skill_name === skill.name
-              )
-          )}
-          onSkillAdd={handleUserSkillAdd}
-        />
-      )}
+      {storeSkills.length &&
+        storeSkills.filter(
+          (skill) =>
+            !userSkillList.some(
+              (userSkill) => userSkill.skill_name === skill.name
+            )
+        ).length > 0 && (
+          <SkillSelection
+            skills={storeSkills.filter(
+              (skill) =>
+                !userSkillList.some(
+                  (userSkill) => userSkill.skill_name === skill.name
+                )
+            )}
+            onSkillAdd={handleUserSkillAdd}
+          />
+        )}
       <div style={{ marginBottom: "25px", marginTop: "8px" }}>
         <UserSkillList
           userSkills={userSkillList}

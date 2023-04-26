@@ -54,10 +54,20 @@ export default createGlobalStyle`
 .divider:before {
   content: "";
   position: absolute;
-  top: -3px;
+  top: -4px;
   left: 0;
-  height: 28px;
+  height: 30px;
   width: 3px;
   background-color: white;
+}
+
+
+
+.ignore:hover {
+  cursor: pointer;
+}
+
+.accept:hover {
+  cursor: pointer;
 }
 `;
