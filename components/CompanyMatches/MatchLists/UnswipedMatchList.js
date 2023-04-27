@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import styled from "styled-components";
 
@@ -51,6 +51,7 @@ const UnswipedMatchList = ({
   onSwipedLeft,
 }) => {
   const router = useRouter();
+  const tinderCardRef = useRef(null);
 
   const [TinderCard, setTinderCard] = useState(null);
   const isBrowserReady = typeof window !== "undefined";
@@ -101,9 +102,18 @@ const UnswipedMatchList = ({
             } */
           >
             <TinderCard
+              ref={tinderCardRef}
+              onCardLeftScreen={() => {
+                if (tinderCardRef.current) {
+                  console.log("I LEFT THE SCREEN", tinderCardRef);
+
+                  setTimeout(() => {
+                    tinderCardRef.current.restoreCard();
+                  }, 300);
+                }
+              }}
               className="swipe"
               onSwipe={onSwipe}
-              onCardLeftScreen={() => onCardLeftScreen("fooBar")}
 
               /* preventSwipe={["right", "left"]} */
             >

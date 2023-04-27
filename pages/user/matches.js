@@ -288,7 +288,7 @@ const Matches = () => {
   ]);
 
   return (
-    <div style={{ marginBottom: "40px" }}>
+    <div style={{ marginBottom: "40px", overflowX: "hidden" }}>
       <div>
         {!isFetchingAfterSwipe ? (
           storeCompanies
