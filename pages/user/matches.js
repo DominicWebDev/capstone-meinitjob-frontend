@@ -10,6 +10,7 @@ import UnswipedMatchList from "../../components/CompanyMatches/MatchLists/Unswip
 import matchingAlgorithm from "../../utils/matchingAlgorithm";
 import NoMatches from "../../components/CompanyMatches/NoMatches";
 import SwipedMatchList from "../../components/CompanyMatches/MatchLists/SwipedMatchList";
+import { PulseLoader } from "react-spinners";
 
 const Matches = () => {
   const router = useRouter();
@@ -17,6 +18,8 @@ const Matches = () => {
   const [userMatches, setUserMatches] = useState([]);
   const [isFetchingMatches, setIsFetchingMatches] = useState(false);
   const [isAddingMatches, setIsAddingMatches] = useState(false);
+  const [refreshCounter, setRefreshCounter] = useState(0);
+  const [isFetchingAfterSwipe, setIsFetchingAfterSwipe] = useState(false);
 
   /* TODO: DYNAMIC USER ID FROM LOGIN */
   const user_id = "1";
@@ -57,12 +60,6 @@ const Matches = () => {
   const unmatchedMatches = userMatches.filter(
     (match) => match.match_status === "unmatched"
   );
-  const acceptedMatches = userMatches.filter(
-    (match) => match.match_status === "accepted"
-  );
-  const ignoredMatches = userMatches.filter(
-    (match) => match.match_status === "ignored"
-  );
 
   let unmatchedCompanies = storeCompanies
     .filter((company) =>
@@ -76,10 +73,6 @@ const Matches = () => {
         (unmatchedMatch) => unmatchedMatch.fk_company_id === company.id
       ).id,
     }));
-
-  function refreshPage() {
-    router.reload();
-  }
 
   const getUnmatchedCompanies = () => {
     const unmatchedMatches = userMatches.filter(
@@ -100,49 +93,22 @@ const Matches = () => {
       })));
   };
 
-  const acceptedCompanies = storeCompanies.filter((company) =>
-    acceptedMatches.some(
-      (acceptedMatch) => acceptedMatch.fk_company_id === company.id
-    )
-  );
+  const resetAndFetchData = () => {
+    setUserMatches([]);
+    setRefreshCounter((prev) => prev + 1);
+  };
 
-  const ignoredCompanies = storeCompanies.filter((company) =>
-    ignoredMatches.some(
-      (ignoredMatch) => ignoredMatch.fk_company_id === company.id
-    )
-  );
-
-  /* TODO: HANDLE SWIPES WITH NEW DATABASE REQUESTS */
+  /* ACCEPT */
   const handleSwipedRight = (matchId) => {
-    console.log("swipeRIGHT matchId: ", matchId);
-    console.log("____isFetchingMatches !!!! _---____", isFetchingMatches);
-    /* ACCEPT */
+    /*  setIsFetchingAfterSwipe(true); */
     storeUpdateMatch(matchId, "accepted").then(() => {
-      setUserMatches([]);
-
-      storeFetchMatchesByUserId(user_id).then(() => {
-        setIsFetchingMatches(true);
-        refreshPage();
-        /*  unmatchedCompanies = storeCompanies
-          .filter((company) =>
-            unmatchedMatches.some(
-              (unmatchedMatch) => unmatchedMatch.fk_company_id === company.id
-            )
-          )
-          .map((company) => ({
-            ...company,
-            match_id: unmatchedMatches.find(
-              (unmatchedMatch) => unmatchedMatch.fk_company_id === company.id
-            ).id,
-          })); */
-      });
+      /* setUserMatches([]); */
+      resetAndFetchData();
+      /*   setTimeout(() => {
+        setIsFetchingAfterSwipe(false);
+      }, 800); */
     });
-    /* TODO: SEND TO BACKEND AND REFETCH! */
-    /* setUserMatches((prevUnacceptedCompanies) =>
-      prevUnacceptedCompanies.filter(
-        (company) => company.id !== storeSelectedCompanySkills[0].fk_company_id
-      )
-    ); */
+
     toast.success("Unternehmen akzeptiert!", {
       position: "top-center",
       autoClose: 2000,
@@ -156,15 +122,15 @@ const Matches = () => {
     toast.clearWaitingQueue();
   };
 
+  /* IGNORE */
   const handleSwipedLeft = (matchId) => {
-    console.log("swipeLeft matchId: ", matchId);
-    console.log("____isFetchingMatches !!!! _---____", isFetchingMatches);
+    /* setIsFetchingAfterSwipe(true); */
     storeUpdateMatch(matchId, "ignored").then(() => {
-      setUserMatches([]);
-      storeFetchMatchesByUserId(user_id).then(() => {
-        setIsFetchingMatches(true);
-        refreshPage();
-      });
+      /* setUserMatches([]); */
+      resetAndFetchData();
+      /*  setTimeout(() => {
+        setIsFetchingAfterSwipe(false);
+      }, 800); */
     });
 
     toast.success("Unternehmen ignoriert!", {
@@ -178,8 +144,6 @@ const Matches = () => {
       theme: "colored",
     });
     toast.clearWaitingQueue();
-    /* TODO: SEND TO BACKEND AND REFETCH! */
-    /* IGNORE */
   };
 
   const handleRemoveMatch = (matchId) => {
@@ -201,7 +165,7 @@ const Matches = () => {
     storeFetchAllSkills();
     storeFetchCompanies();
     storeFetchAllCompanySkills();
-  }, []);
+  }, [refreshCounter]);
 
   useEffect(() => {
     /* IF MATCHES HAVE RECENTLY BEEN FETCHED AND USESTATE IS EMPTY AND NEW MATCHES ARE IN STORE FROM DB */
@@ -211,19 +175,34 @@ const Matches = () => {
         (match) => +match.fk_user_id === +user_id
       );
 
-      setUserMatches(myStoreMatches);
+      /*  setUserMatches(myStoreMatches); */
       setIsFetchingMatches(false);
     }
   }, [isFetchingMatches, userMatches, storeMatches]);
 
   useEffect(() => {
+    console.log(
+      "###########START THESE ARE MY USEFFECT INFORMATION#################"
+    );
+    console.log("storeSelectedUser", storeSelectedUser);
+    console.log("storeUserSkills.length", storeUserSkills.length);
+    console.log("storeSkills", storeSkills);
+    console.log("storeCompanies.length", storeCompanies.length);
+    console.log("storeAllCompanySkills.length", storeAllCompanySkills.length);
+    console.log("storeMatches", storeMatches);
+    console.log("!isFetchingMatches", !isFetchingMatches);
+
+    console.log(
+      "###########END THESE ARE MY USEFFECT INFORMATION#################"
+    );
+
     if (
       storeSelectedUser &&
       storeUserSkills.length &&
       storeSkills &&
       storeCompanies.length &&
       storeAllCompanySkills.length &&
-      storeMatches.length &&
+      storeMatches &&
       !isFetchingMatches
     ) {
       let foundAlgoMatches = matchingAlgorithm(
@@ -270,6 +249,25 @@ const Matches = () => {
 
         /* TODO: SEND A REQUEST TO THE BACKEND TO ADD THE NEW RECOGNIZED MATCHES TO THE DATABASE */
         /* TODO: THEN REFETCH THE MATCHES FROM THE DATABASE */
+      } else {
+        if (!isAddingMatches) {
+          foundAlgoMatches.forEach((matchedCompany) => {
+            console.log(
+              `ADDING NEW MATCH TO DATABASE: user_id ${user_id} matchedCompany.id${matchedCompany.id}`
+            );
+            setIsAddingMatches(true);
+            storeAddMatch(user_id, matchedCompany.id).then(() => {
+              handleFetchMatches();
+            });
+          });
+        }
+
+        if (!isAddingMatches) {
+          setIsAddingMatches(false);
+        }
+
+        /* TODO: SEND A REQUEST TO THE BACKEND TO ADD THE NEW RECOGNIZED MATCHES TO THE DATABASE */
+        /* TODO: THEN REFETCH THE MATCHES FROM THE DATABASE */
       }
 
       console.log(
@@ -286,47 +284,122 @@ const Matches = () => {
     storeAllCompanySkills,
     storeMatches,
     isFetchingMatches,
+    refreshCounter,
   ]);
 
   return (
     <div style={{ marginBottom: "40px" }}>
       <div>
-        {unmatchedCompanies.length > 0 ? (
-          <div
-            style={{
-              background: "white",
-              paddingBottom: "22px",
-              paddingTop: "16px",
-              marginBottom: "20px",
-            }}
-          >
-            <h2
+        {!isFetchingAfterSwipe ? (
+          storeCompanies
+            .filter((company) =>
+              storeMatches
+                .filter(
+                  (match) =>
+                    match.match_status === "unmatched" &&
+                    +match.fk_user_id === +user_id
+                )
+                .some(
+                  (unmatchedMatch) =>
+                    unmatchedMatch.fk_company_id === company.id
+                )
+            )
+            .map((company) => ({
+              ...company,
+              match_id: storeMatches
+                .filter(
+                  (match) =>
+                    match.match_status === "unmatched" &&
+                    +match.fk_user_id === +user_id
+                )
+                .find(
+                  (unmatchedMatch) =>
+                    unmatchedMatch.fk_company_id === company.id
+                ).id,
+            })).length > 0 ? (
+            <div
               style={{
-                textAlign: "center",
-                color: "black",
-                fontSize: "1.3rem",
+                background: "white",
+                paddingBottom: "22px",
+                paddingTop: "16px",
+                marginBottom: "20px",
               }}
             >
-              Diese Unternehmen suchen dich!
-            </h2>
-            <UnswipedMatchList
-              bestUnswipedMatchCompany={
-                getUnmatchedCompanies().sort(
-                  (a, b) => b.matchingScore - a.matchingScore
-                )[0]
-              }
-              onSwipedLeft={handleSwipedLeft}
-              onSwipedRight={handleSwipedRight}
-            />
-          </div>
-        ) : isAddingMatches ? (
-          <></>
+              <div
+                style={{
+                  fontSize: "2rem",
+                  fontWeight: "900",
+                  textAlign: "center",
+                  marginBottom: "1rem",
+                }}
+              >
+                Du hast ein Match!
+              </div>
+              <UnswipedMatchList
+                bestUnswipedMatchCompany={
+                  storeCompanies
+                    .filter((company) =>
+                      storeMatches
+                        .filter(
+                          (match) =>
+                            match.match_status === "unmatched" &&
+                            +match.fk_user_id === +user_id
+                        )
+                        .some(
+                          (unmatchedMatch) =>
+                            unmatchedMatch.fk_company_id === company.id
+                        )
+                    )
+                    .map((company) => ({
+                      ...company,
+                      match_id: storeMatches
+                        .filter(
+                          (match) =>
+                            match.match_status === "unmatched" &&
+                            +match.fk_user_id === +user_id
+                        )
+                        .find(
+                          (unmatchedMatch) =>
+                            unmatchedMatch.fk_company_id === company.id
+                        ).id,
+                    }))
+                    .sort((a, b) => b.matchingScore - a.matchingScore)[0]
+                }
+                onSwipedLeft={handleSwipedLeft}
+                onSwipedRight={handleSwipedRight}
+              />
+            </div>
+          ) : (
+            <NoMatches />
+          )
         ) : (
-          <NoMatches />
+          <div
+            style={{
+              height: "445.5px",
+              width: "100vw",
+              backgroundColor: "white",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <PulseLoader color="#f85440" speedMultiplier={0.5} />
+          </div>
         )}
       </div>
       <div>
-        {acceptedCompanies.length > 0 && (
+        {storeCompanies.filter((company) =>
+          storeMatches
+            .filter(
+              (match) =>
+                match.match_status === "accepted" &&
+                +match.fk_user_id === +user_id
+            )
+            .some(
+              (ignoredUserMatch) =>
+                ignoredUserMatch.fk_company_id === company.id
+            )
+        ).length > 0 && (
           <div
             style={{
               background: "white",
@@ -336,7 +409,18 @@ const Matches = () => {
             }}
           >
             <SwipedMatchList
-              matchedCompanies={acceptedCompanies}
+              matchedCompanies={storeCompanies.filter((company) =>
+                storeMatches
+                  .filter(
+                    (match) =>
+                      match.match_status === "accepted" &&
+                      +match.fk_user_id === +user_id
+                  )
+                  .some(
+                    (acceptedUserMatch) =>
+                      +acceptedUserMatch.fk_company_id === +company.id
+                  )
+              )}
               headlineText="Mit Unternehmen im Kontakt"
               onRemove={handleRemoveMatch}
             />
@@ -344,7 +428,18 @@ const Matches = () => {
         )}
       </div>
       <div>
-        {ignoredCompanies.length > 0 && (
+        {storeCompanies.filter((company) =>
+          storeMatches
+            .filter(
+              (match) =>
+                match.match_status === "ignored" &&
+                +match.fk_user_id === +user_id
+            )
+            .some(
+              (ignoredUserMatch) =>
+                ignoredUserMatch.fk_company_id === company.id
+            )
+        ).length > 0 && (
           <div
             style={{
               background: "white",
@@ -354,7 +449,18 @@ const Matches = () => {
             }}
           >
             <SwipedMatchList
-              matchedCompanies={ignoredCompanies}
+              matchedCompanies={storeCompanies.filter((company) =>
+                storeMatches
+                  .filter(
+                    (match) =>
+                      match.match_status === "ignored" &&
+                      +match.fk_user_id === +user_id
+                  )
+                  .some(
+                    (ignoredUserMatch) =>
+                      ignoredUserMatch.fk_company_id === company.id
+                  )
+              )}
               headlineText="Unternehmen die du ignorierst"
               onRemove={handleRemoveMatch}
             />

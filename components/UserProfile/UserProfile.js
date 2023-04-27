@@ -67,6 +67,7 @@ const TextArea = styled.textarea`
   border: 2px solid #ccc;
   border-radius: 0.5rem;
   transition: border-color 0.3s;
+  resize: none;
 
   /* Increase the height of the textarea */
   height: 200px;

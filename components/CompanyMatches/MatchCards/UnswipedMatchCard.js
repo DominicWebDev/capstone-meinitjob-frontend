@@ -43,7 +43,7 @@ function UnswipedMatchCard({ company, style }) {
           <StyledMatchCardLogo>
             {company.logo && company.name && (
               <Image
-                src={`/logos/${company.logo}`}
+                src={`/assets/logos/${company.logo}`}
                 alt={`${company.name} logo`}
                 width={100}
                 height={100}

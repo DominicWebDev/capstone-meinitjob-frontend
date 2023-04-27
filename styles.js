@@ -14,11 +14,9 @@ export default createGlobalStyle`
 
 // f82978
 // #F85440
-
   color: #f14f4a;
 }
 
-  
 .navhover {
   color: #7C8591;
   height: 25px;
@@ -61,8 +59,6 @@ export default createGlobalStyle`
   background-color: white;
 }
 
-
-
 .ignore:hover {
   cursor: pointer;
 }
@@ -70,7 +66,6 @@ export default createGlobalStyle`
 .accept:hover {
   cursor: pointer;
 }
-
 
 .card {
   position: relative;
@@ -103,7 +98,9 @@ export default createGlobalStyle`
     background: linear-gradient(45deg, rgb(255, 0, 0), rgb(255, 115, 0), rgb(255, 251, 0), rgb(72, 255, 0), rgb(0, 255, 213), rgb(0, 43, 255), rgb(122, 0, 255), rgb(255, 0, 200), rgb(255, 0, 0)) 0% 0% / 400%;
     animation: gradientAnimation 20s linear infinite;
     transition: opacity 0.3s ease-in-out 0s;
+     border-radius: 20px; 
 }
+
 
 @keyframes gradientAnimation {
     0% {
@@ -114,17 +111,10 @@ export default createGlobalStyle`
     }
 }
 
-
 .cardContainer {
   width: 90vw;
   max-width: 260px;
   height: 300px;
-
-
-}
-
-.swipe:last-of-type { 
-
 }
 
 .cardimage {
@@ -135,6 +125,12 @@ export default createGlobalStyle`
 .card h3 {
   margin: 0px;
   color: #fff;
+}
+.one-line-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 16px; /* Hier können Sie die Schriftgröße anpassen */
 }
 
 `;

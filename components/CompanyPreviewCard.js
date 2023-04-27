@@ -46,7 +46,7 @@ function CompanyPreviewCard({ id, name, logo, imageSize = 180 }) {
         <PreviewCardLogo>
           {logo && name && (
             <Image
-              src={`/logos/${logo}`}
+              src={`/assets/logos/${logo}`}
               alt={`${name} logo`}
               width={imageSize}
               height={imageSize}

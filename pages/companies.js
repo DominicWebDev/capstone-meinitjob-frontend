@@ -1,20 +1,21 @@
-import styled from "styled-components";
-import CompanyFilter from "../components/CompanyFilter";
 import { useEffect, useState } from "react";
-import CompanyPreviewCard from "../components/CompanyPreviewCard";
-import useCompanyStore from "../slices/CreateCompanySlice";
+import styled from "styled-components";
 
-const CompaniesPageContainer = styled.div`
+import useCompanyStore from "../slices/CreateCompanySlice";
+import CompanyFilter from "../components/CompanyFilter";
+import CompanyPreviewCard from "../components/CompanyPreviewCard";
+
+const StyledCompaniesPageContainer = styled.div`
   width: 100vw;
   max-width: 100vw;
   margin-bottom: 60px;
 `;
-const CompanieHeadline = styled.h1`
+const StyledCompaniesHeadline = styled.h1`
   text-align: center;
   color: black;
 `;
 
-const CompaniesCardContainer = styled.div`
+const StyledCompaniesCardContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   grid-gap: 4px;
@@ -77,17 +78,16 @@ export default function CompaniesPage() {
   }, [filterOptions]);
 
   return (
-    <CompaniesPageContainer>
-      <CompanieHeadline>
+    <StyledCompaniesPageContainer>
+      <StyledCompaniesHeadline>
         {filteredCompanies.length} Unternehmen
-      </CompanieHeadline>
+      </StyledCompaniesHeadline>
       <CompanyFilter
         filterOptions={filterOptions}
         setFilterOptions={setFilterOptions}
         handleReset={handleReset}
       />
-
-      <CompaniesCardContainer>
+      <StyledCompaniesCardContainer>
         {filteredCompanies.map((company) => (
           <CompanyPreviewCard
             key={company.id}
@@ -97,7 +97,7 @@ export default function CompaniesPage() {
             imageSize={150}
           />
         ))}
-      </CompaniesCardContainer>
-    </CompaniesPageContainer>
+      </StyledCompaniesCardContainer>
+    </StyledCompaniesPageContainer>
   );
 }

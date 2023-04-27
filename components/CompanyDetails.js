@@ -28,7 +28,7 @@ function CompanyDetails({ company }) {
     <div>
       <ImageContainer>
         <Image
-          src={`/logos/${company.logo}`}
+          src={`/assets/logos/${company.logo}`}
           alt={`${company.name} logo`}
           width={180}
           height={180}

@@ -3,11 +3,10 @@ import Link from "next/link";
 
 import styled from "styled-components";
 
-import CompanyPreviewCard from "../components/CompanyPreviewCard";
 import useCompanyStore from "../slices/CreateCompanySlice";
-import LoginButton from "../components/LoginButton";
+import CompanyPreviewCard from "../components/CompanyPreviewCard";
 
-const LandingPageContainer = styled.div`
+const StyledLandingPageContainer = styled.div`
   display: flex;
   flex-direction: column;
   max-width: 100vw;
@@ -15,13 +14,14 @@ const LandingPageContainer = styled.div`
   margin-bottom: 80px;
 `;
 
-const Title = styled.h1`
+const StyledTitle = styled.h1`
   font-size: 3rem;
   font-weight: bold;
   margin-bottom: 0.3rem;
   margin-top: 8px;
   color: black;
 `;
+
 const StyledButton = styled.button`
   background-color: white;
   color: #21262e;
@@ -41,10 +41,8 @@ export default function LandingPage() {
   const storeFetchCompanies = useCompanyStore((state) => state.fetchCompanies);
   const storeCompanies = useCompanyStore((state) => state.companies);
 
-  const getThreeRandomCompanies = (companiesArray) => {
-    const shuffled = storeCompanies.sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, 3);
-  };
+  const getThreeRandomCompanies = (companiesArray) =>
+    storeCompanies.sort(() => 0.5 - Math.random()).slice(0, 3);
 
   useEffect(() => {
     storeFetchCompanies();
@@ -57,8 +55,8 @@ export default function LandingPage() {
   }, [storeCompanies]);
 
   return (
-    <LandingPageContainer>
-      <Title>Unternehmen</Title>
+    <StyledLandingPageContainer>
+      <StyledTitle>Unternehmen</StyledTitle>
       <div>
         {companies.map((company) => (
           <CompanyPreviewCard
@@ -73,6 +71,6 @@ export default function LandingPage() {
       <Link href="/companies">
         <StyledButton>Alle Unternehmen</StyledButton>
       </Link>
-    </LandingPageContainer>
+    </StyledLandingPageContainer>
   );
 }

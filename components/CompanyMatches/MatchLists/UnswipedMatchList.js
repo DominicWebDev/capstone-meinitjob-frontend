@@ -2,8 +2,6 @@ import { useRouter } from "next/router";
 
 import { useEffect, useState } from "react";
 
-import { useSwipeable } from "react-swipeable";
-
 import styled from "styled-components";
 
 import UnswipedMatchCard from "../MatchCards/UnswipedMatchCard";
@@ -78,14 +76,6 @@ const UnswipedMatchList = ({
     bestUnswipedMatchCompany
   );
 
-  const handlers = useSwipeable({
-    onSwipedRight: () => onSwipedRight(bestUnswipedMatchCompany.match_id),
-    onSwipedLeft: () => onSwipedLeft(bestUnswipedMatchCompany.match_id),
-    swipeDuration: 500,
-    preventScrollOnSwipe: true,
-    trackMouse: true,
-  });
-
   useEffect(() => {
     if (isBrowserReady) {
       import("react-tinder-card").then((module) => {
@@ -127,7 +117,7 @@ const UnswipedMatchList = ({
                 {bestUnswipedMatchCompany.logo &&
                   bestUnswipedMatchCompany.name && (
                     <Image
-                      src={`/logos/${bestUnswipedMatchCompany.logo}`}
+                      src={`/assets/logos/${bestUnswipedMatchCompany.logo}`}
                       alt={`${bestUnswipedMatchCompany.name} logo`}
                       width={100}
                       height={100}
@@ -143,13 +133,13 @@ const UnswipedMatchList = ({
               <div
                 /*  style={{
                   backgroundImage:
-                    "url(" + `/logos/${bestUnswipedMatchCompany.logo}` + ")",
+                    "url(" + `/assets/logos/${bestUnswipedMatchCompany.logo}` + ")",
                 }} */
                 className="card"
               >
                 <div>
                   <Image
-                    src={`/logos/${bestUnswipedMatchCompany.logo}`}
+                    src={`/assets/logos/${bestUnswipedMatchCompany.logo}`}
                     alt={`${bestUnswipedMatchCompany.name} logo`}
                     width={100}
                     height={100}
@@ -159,7 +149,9 @@ const UnswipedMatchList = ({
                   />
                 </div>
                 <div>
-                  <h3>{bestUnswipedMatchCompany.name}</h3>
+                  <h3 className="one-line-text" style={{ textAlign: "center" }}>
+                    {bestUnswipedMatchCompany.name}
+                  </h3>
                 </div>
                 <div
                   style={{
@@ -202,9 +194,10 @@ const UnswipedMatchList = ({
                         display: "flex",
                         justifyContent: "flex-end",
                         minWidth: "70%",
+                        textTransform: "capitalize",
                       }}
                     >
-                      germany
+                      {bestUnswipedMatchCompany.location}
                     </div>
                   </div>
                   <div
@@ -245,7 +238,7 @@ const UnswipedMatchList = ({
                         minWidth: "70%",
                       }}
                     >
-                      remote
+                      {bestUnswipedMatchCompany.remote ? "Remote" : "Büro"}
                     </div>
                   </div>
                   <div
@@ -281,7 +274,7 @@ const UnswipedMatchList = ({
                         justifyContent: "flex-end",
                       }}
                     >
-                      MA 500
+                      MA {bestUnswipedMatchCompany.number_of_employees}
                     </div>
                   </div>
                 </div>

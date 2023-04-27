@@ -34,9 +34,17 @@ const PreviewCardName = styled.h2`
   margin-top: 4px;
 `;
 
-function SwipedMatchCard({ id, name, logo }) {
+function SwipedMatchCard({
+  className,
+  id,
+  name,
+  logo,
+  location,
+  remote,
+  numberOfEmployees,
+}) {
   return (
-    <PreviewCard>
+    <PreviewCard className={className}>
       <Link href={`/company/${id}`}>
         <div
           style={{
@@ -48,7 +56,7 @@ function SwipedMatchCard({ id, name, logo }) {
           <PreviewCardLogo>
             {logo && name && (
               <Image
-                src={`/logos/${logo}`}
+                src={`/assets/logos/${logo}`}
                 alt={`${name} logo`}
                 width={100}
                 height={100}
@@ -101,9 +109,10 @@ function SwipedMatchCard({ id, name, logo }) {
                   display: "flex",
                   justifyContent: "flex-end",
                   minWidth: "70%",
+                  textTransform: "capitalize",
                 }}
               >
-                germany
+                {location}
               </div>
             </div>
             <div
@@ -146,7 +155,7 @@ function SwipedMatchCard({ id, name, logo }) {
                   minWidth: "70%",
                 }}
               >
-                remote
+                {remote ? "Remote" : "Büro"}
               </div>
             </div>
             <div
@@ -186,7 +195,7 @@ function SwipedMatchCard({ id, name, logo }) {
                   minWidth: "70%",
                 }}
               >
-                MA 500
+                MA {numberOfEmployees}
               </div>
             </div>
           </div>

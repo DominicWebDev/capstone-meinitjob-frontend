@@ -102,7 +102,7 @@ export const createUserSlice = (set) => ({
     set({ matches: responseJson?.matches ?? [] });
   },
   addMatch: async (fk_user_id, fk_company_id) => {
-    await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/v1/users/matches`, {
+    await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/v1/users/match`, {
       body: JSON.stringify({
         fk_user_id,
         fk_company_id,
@@ -112,7 +112,7 @@ export const createUserSlice = (set) => ({
     });
   },
   updateMatch: async (id, match_status) => {
-    await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/v1/users/matches`, {
+    await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/v1/users/match`, {
       body: JSON.stringify({
         id,
         match_status,
@@ -122,12 +122,9 @@ export const createUserSlice = (set) => ({
     });
   },
   deleteMatch: async (id) => {
-    await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/v1/users/matches/${id}`,
-      {
-        method: "DELETE",
-      }
-    );
+    await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/v1/users/match/${id}`, {
+      method: "DELETE",
+    });
   },
 });
 

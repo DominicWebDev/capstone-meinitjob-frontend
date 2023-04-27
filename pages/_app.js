@@ -1,7 +1,9 @@
 import GlobalStyle from "../styles";
-import Navbar from "../components/layout/Navbar";
+
 import { SessionProvider } from "next-auth/react";
 import { Slide, ToastContainer } from "react-toastify";
+
+import Navbar from "../components/Navbar/Navbar";
 
 import "react-toastify/dist/ReactToastify.css";
 import "@fortawesome/fontawesome-svg-core/styles.css";
