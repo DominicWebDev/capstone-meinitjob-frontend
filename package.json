@@ -21,6 +21,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@next/font": "^13.0.6",
+    "@react-spring/web": "^9.5.5",
     "eslint": "8.29.0",
     "eslint-config-next": "13.0.6",
     "next": "13.0.6",
@@ -28,6 +29,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-swipeable": "^7.0.0",
+    "react-tinder-card": "^1.6.2",
     "react-toastify": "^9.1.2",
     "styled-components": "^5.3.9",
     "zustand": "^4.3.7"

@@ -3,7 +3,7 @@ import Image from "next/image";
 
 import styled from "styled-components";
 
-const StyledMatchCardContainer = styled.div`
+const StyledMatchCardContainer = styled.button`
   border: 1.5px solid black;
   border-radius: 8px;
   padding: 8px;
@@ -33,9 +33,13 @@ const StyledMatchCardName = styled.h2`
 
 function UnswipedMatchCard({ company, style }) {
   return (
-    <div style={style}>
-      <StyledMatchCardContainer>
-        <Link href={`/company/${company.id}`}>
+    <div>
+      <button
+        className="pressable"
+        onclick={() => console.log("FUKC THIS SHIT ALOT")}
+      >
+        <div>
+          {/*  <Link href={`/company/${company.id}`}> */}
           <StyledMatchCardLogo>
             {company.logo && company.name && (
               <Image
@@ -48,8 +52,9 @@ function UnswipedMatchCard({ company, style }) {
             )}
             <StyledMatchCardName>{company.name}</StyledMatchCardName>
           </StyledMatchCardLogo>
-        </Link>
-      </StyledMatchCardContainer>
+          {/*  </Link> */}
+        </div>
+      </button>
     </div>
   );
 }

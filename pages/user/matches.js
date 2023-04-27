@@ -295,7 +295,7 @@ const Matches = () => {
           <div
             style={{
               background: "white",
-              paddingBottom: "46px",
+              paddingBottom: "22px",
               paddingTop: "16px",
               marginBottom: "20px",
             }}
