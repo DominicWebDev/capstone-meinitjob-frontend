@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import useCompanyStore from "../../slices/CreateCompanySlice";
 import useUserStore from "../../slices/CreateUserSlice";
 import useSkillStore from "../../slices/CreateSkillSlice";
-
+import { useSession } from "next-auth/react";
 import UnswipedMatchList from "../../components/CompanyMatches/MatchLists/UnswipedMatchList";
 import matchingAlgorithm from "../../utils/matchingAlgorithm";
 import NoMatches from "../../components/CompanyMatches/NoMatches";
@@ -14,6 +14,7 @@ import { PulseLoader } from "react-spinners";
 
 const Matches = () => {
   const router = useRouter();
+  const { data: session } = useSession();
 
   const [userMatches, setUserMatches] = useState([]);
   const [isFetchingMatches, setIsFetchingMatches] = useState(false);
@@ -22,7 +23,7 @@ const Matches = () => {
   const [isFetchingAfterSwipe, setIsFetchingAfterSwipe] = useState(false);
 
   /* TODO: DYNAMIC USER ID FROM LOGIN */
-  const user_id = "1";
+  const user_id = session?.frontendUser.id.toString();
 
   /* STORE FUNCTIONS */
   const storeFetchUserById = useUserStore((state) => state.fetchUserById);
@@ -181,21 +182,6 @@ const Matches = () => {
   }, [isFetchingMatches, userMatches, storeMatches]);
 
   useEffect(() => {
-    console.log(
-      "###########START THESE ARE MY USEFFECT INFORMATION#################"
-    );
-    console.log("storeSelectedUser", storeSelectedUser);
-    console.log("storeUserSkills.length", storeUserSkills.length);
-    console.log("storeSkills", storeSkills);
-    console.log("storeCompanies.length", storeCompanies.length);
-    console.log("storeAllCompanySkills.length", storeAllCompanySkills.length);
-    console.log("storeMatches", storeMatches);
-    console.log("!isFetchingMatches", !isFetchingMatches);
-
-    console.log(
-      "###########END THESE ARE MY USEFFECT INFORMATION#################"
-    );
-
     if (
       storeSelectedUser &&
       storeUserSkills.length &&
@@ -212,9 +198,6 @@ const Matches = () => {
         storeCompanies,
         storeAllCompanySkills
       );
-
-      console.log("foundMatches PRE FILTER EXISTING MATCHES", foundAlgoMatches);
-      console.log("storeMatches PRE FILTER MATCHING", storeMatches);
 
       const myStoreMatches = storeMatches.filter(
         (match) => +match.fk_user_id === +user_id
@@ -233,9 +216,6 @@ const Matches = () => {
 
         if (!isAddingMatches && foundAlgoMatches.length !== algoMatchesLength) {
           foundAlgoMatches.forEach((matchedCompany) => {
-            console.log(
-              `ADDING NEW MATCH TO DATABASE: user_id ${user_id} matchedCompany.id${matchedCompany.id}`
-            );
             setIsAddingMatches(true);
             storeAddMatch(user_id, matchedCompany.id).then(() => {
               handleFetchMatches();
@@ -252,9 +232,6 @@ const Matches = () => {
       } else {
         if (!isAddingMatches) {
           foundAlgoMatches.forEach((matchedCompany) => {
-            console.log(
-              `ADDING NEW MATCH TO DATABASE: user_id ${user_id} matchedCompany.id${matchedCompany.id}`
-            );
             setIsAddingMatches(true);
             storeAddMatch(user_id, matchedCompany.id).then(() => {
               handleFetchMatches();
@@ -270,10 +247,6 @@ const Matches = () => {
         /* TODO: THEN REFETCH THE MATCHES FROM THE DATABASE */
       }
 
-      console.log(
-        "foundMatches POST FILTER EXISTING MATCHES JUST LOGGING",
-        foundAlgoMatches
-      );
       /* setUnacceptedCompanies(foundAlgoMatches); */
     }
   }, [
@@ -286,6 +259,14 @@ const Matches = () => {
     isFetchingMatches,
     refreshCounter,
   ]);
+
+  useEffect(() => {
+    if (!session) {
+      router.replace(
+        `/api/auth/signin?callbackUrl=${process.env.NEXT_PUBLIC_NEXTAUTH_URL}`
+      );
+    }
+  }, [session, router]);
 
   return (
     <div style={{ marginBottom: "40px", overflowX: "hidden" }}>

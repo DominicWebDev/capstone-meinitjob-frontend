@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-
+import { useSession } from "next-auth/react";
 import { SkillRadioSelection } from "./SkillRadioSelection";
 
 const Container = styled.div`
@@ -74,6 +74,8 @@ const Button = styled.button`
 `;
 
 const SkillSelection = ({ skills, onSkillAdd }) => {
+  const { data: session } = useSession();
+
   const [selectedSkill, setSelectedSkill] = useState("");
   const [selectedLevel, setSelectedLevel] = useState(1);
 
@@ -87,10 +89,10 @@ const SkillSelection = ({ skills, onSkillAdd }) => {
     event.preventDefault();
     if (selectedSkill) {
       const foundSkill = findSkillInSkillStore(selectedSkill, selectedLevel);
-      console.log("foundSkillTESTHIER", foundSkill);
+
       onSkillAdd({
         skill_id: foundSkill.id,
-        user_id: "1",
+        user_id: session.frontendUser.id.toString(),
       }); /* TODO: HARDCODED FOR USER 1 NEEDS TO BE DYNAMIC FOR CURRENT USER */
       /*       handleResetSkillSelection(); */
       setSelectedSkill("");

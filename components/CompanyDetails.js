@@ -49,7 +49,6 @@ function CompanyDetails({ company }) {
   );
 }
 
-/* TODO: CAN THIS BE REMOVED? */
 export async function getStaticProps() {
   return {
     props: {

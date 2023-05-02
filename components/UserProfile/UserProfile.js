@@ -146,7 +146,7 @@ const ProfileImage = styled.img`
   border-radius: 50%;
 `;
 
-const UserProfile = ({ user, onSubmit, user_id = 1, onUpdateUser }) => {
+const UserProfile = ({ user, onSubmit, user_id, onUpdateUser }) => {
   const [first_name, setFirst_Name] = useState(user.first_name);
   const [last_name, setLast_Name] = useState(user.Last_name);
   const [image, setImage] = useState(user.image);
@@ -183,7 +183,7 @@ const UserProfile = ({ user, onSubmit, user_id = 1, onUpdateUser }) => {
 
   useEffect(() => {
     fetchAllSkills();
-    storeFetchUserSkillsByUserId(user_id); // TODO: CHANGE TO USER_ID DYNAMICALLY
+    storeFetchUserSkillsByUserId(user_id);
   }, []);
 
   useEffect(() => {
@@ -191,7 +191,6 @@ const UserProfile = ({ user, onSubmit, user_id = 1, onUpdateUser }) => {
   }, [storeUserSkills]);
 
   const handleUserSkillAdd = ({ skill_id, user_id }) => {
-    console.log("skillTESTHIERid", skill_id, user_id, "usertestSkilL");
     if (userSkillList.find((userSkill) => userSkill.fk_skill_id === skill_id))
       /* TODO: CHECK AGAIN WHEN USERSKILL LIST IS AVAILABLE IN STORE */
       return;
@@ -256,10 +255,6 @@ const UserProfile = ({ user, onSubmit, user_id = 1, onUpdateUser }) => {
   };
 
   const handleUserSkillLevelChange = (id, name, level) => {
-    console.log("RECEIVED handleUserSkillLevelChange id", id);
-    console.log("RECEIVED handleUserSkillLevelChange id", name);
-    console.log("RECEIVED handleUserSkillLevelChange level", level);
-
     storeUpdateUserSkill(id, name, level).then(() => {
       storeFetchUserSkillsByUserId(user_id);
 
@@ -355,7 +350,7 @@ const UserProfile = ({ user, onSubmit, user_id = 1, onUpdateUser }) => {
           />
         </InputContainer>
 
-        <InputContainer>
+        {/*  <InputContainer>
           <Label>Kontakt Email</Label>
           <Input
             type="email"
@@ -363,7 +358,7 @@ const UserProfile = ({ user, onSubmit, user_id = 1, onUpdateUser }) => {
             onChange={(event) => setEmail(event.target.value)}
             placeholder="yourEmail@here.com"
           />
-        </InputContainer>
+        </InputContainer> */}
 
         <InputContainer>
           <Label>Bevorzugter Arbeitsort</Label>

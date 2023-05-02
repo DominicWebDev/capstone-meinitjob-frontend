@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
-
+import { useSession, signIn, signOut } from "next-auth/react";
 import styled from "styled-components";
 
 import useCompanyStore from "../slices/CreateCompanySlice";
@@ -36,6 +36,7 @@ const StyledButton = styled.button`
 `;
 
 export default function LandingPage() {
+  const { data: session } = useSession();
   const [companies, setCompanies] = useState([]);
 
   const storeFetchCompanies = useCompanyStore((state) => state.fetchCompanies);
@@ -54,9 +55,14 @@ export default function LandingPage() {
     }
   }, [storeCompanies]);
 
+  if (session) {
+    console.log(session, "Das ist die Session");
+  }
+
   return (
     <StyledLandingPageContainer>
       <StyledTitle>Unternehmen</StyledTitle>
+
       <div>
         {companies.map((company) => (
           <CompanyPreviewCard

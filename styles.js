@@ -6,7 +6,7 @@ export default createGlobalStyle`
   *::after {
     box-sizing: border-box;
   }
-/* Farbpalette: #ff8509  (Orange Buttons etc?) #208e16 (Grün, h1 etc? )  #fffde9 (Background etc)   */
+
   body {
     margin: 0;
     font-family: system-ui;

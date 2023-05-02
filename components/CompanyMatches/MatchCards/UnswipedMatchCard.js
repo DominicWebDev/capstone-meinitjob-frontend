@@ -34,12 +34,8 @@ const StyledMatchCardName = styled.h2`
 function UnswipedMatchCard({ company, style }) {
   return (
     <div>
-      <button
-        className="pressable"
-        onclick={() => console.log("FUKC THIS SHIT ALOT")}
-      >
+      <button className="pressable">
         <div>
-          {/*  <Link href={`/company/${company.id}`}> */}
           <StyledMatchCardLogo>
             {company.logo && company.name && (
               <Image
@@ -52,7 +48,6 @@ function UnswipedMatchCard({ company, style }) {
             )}
             <StyledMatchCardName>{company.name}</StyledMatchCardName>
           </StyledMatchCardLogo>
-          {/*  </Link> */}
         </div>
       </button>
     </div>

@@ -30,10 +30,7 @@ const SwipedMatchList = ({ matchedCompanies, headlineText, onRemove }) => (
     >
       {headlineText}
     </h2>
-    {console.log(
-      "~~~~~ PFERD MatchList  THESE UNMATCHED MATCHES ARRIVED IN PROPS",
-      matchedCompanies
-    )}
+
     {matchedCompanies.map(
       ({ id, name, logo, location, remote, number_of_employees }) => {
         return (

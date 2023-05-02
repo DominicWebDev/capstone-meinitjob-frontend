@@ -20,7 +20,6 @@ const StyledListContainer = styled.div`
 `;
 
 const UserSkillList = ({ userSkills, onSkillLevelChange, onSkillRemove }) => {
-  console.log("THESE ARE MY USER SKILLS", userSkills);
   return (
     <>
       <StyledListContainer>

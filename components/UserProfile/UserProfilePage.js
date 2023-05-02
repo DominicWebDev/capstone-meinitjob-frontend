@@ -2,12 +2,17 @@ import React, { useState, useEffect } from "react";
 import UserProfile from "./UserProfile";
 import styled from "styled-components";
 import useUserStore from "../../slices/CreateUserSlice";
+import { useSession } from "next-auth/react";
+
+import { useRouter } from "next/router";
 
 const Container = styled.div`
   position: relative;
 `;
 
 const UserProfilePage = () => {
+  const { data: session } = useSession();
+  const router = useRouter();
   const [user, setUser] = useState(null);
 
   const storeSelectedUser = useUserStore((state) => state.selectedUser);
@@ -16,16 +21,29 @@ const UserProfilePage = () => {
   /*   const [isDataFetched, setIsDataFetched] = useState(false); */
 
   useEffect(() => {
-    storeFetchUserById(1);
+    console.log(
+      "sessionDatenschon da wenn ausgeführt wird?? _______",
+      session?.frontendUser.id
+    );
+    if (session?.frontendUser.id) storeFetchUserById(session.frontendUser.id);
   }, []);
+  useEffect(() => {
+    if (session?.frontendUser.id) storeFetchUserById(session.frontendUser.id);
+  }, [session]);
 
   useEffect(() => {
     if (!user && storeSelectedUser) {
-      console.log(user, "user auf der UserProfilePage");
       setUser(storeSelectedUser);
     }
   }, [storeSelectedUser]);
 
+  useEffect(() => {
+    if (!session) {
+      router.replace(
+        `/api/auth/signin?callbackUrl=${process.env.NEXT_PUBLIC_NEXTAUTH_URL}`
+      );
+    }
+  }, [session, router]);
   /*   useEffect(() => {
     if (isDataFetched) {
       localStorage.setItem("user", JSON.stringify(user));
@@ -42,7 +60,7 @@ const UserProfilePage = () => {
   };
 
   const handleUpdateUser = () => {
-    storeFetchUserById(1);
+    storeFetchUserById(session.frontendUser.id);
   };
 
   return (
@@ -50,6 +68,7 @@ const UserProfilePage = () => {
       {user && (
         <>
           <UserProfile
+            user_id={session.frontendUser.id}
             user={user}
             onSubmit={handleFormSubmit}
             onUpdateUser={handleUpdateUser}
